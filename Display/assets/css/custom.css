@@ -1,0 +1,108 @@
+body{
+  overflow-y: hidden;
+}
+body, .bg-cover{
+  background-color: #000E40
+}
+
+@media (min-width: 970px) {
+  .logo-container img{
+    width:inherit;
+    padding: 2% 14% 2% 14%;
+  }
+  .full-width{
+    padding: 0px;
+  }
+  .outer-container{
+    background-color: #ea8f08;
+    height: 100vh;
+  }
+  .head p{
+    text-transform: capitalize;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+  }
+  .pad-right{
+    padding-left: 0px;
+    padding-right: 1%;
+  }
+  .counter p{
+    text-align: center;
+    font-size: 75px;
+    font-weight: bolder;
+    color: white;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo-container img{
+    width:inherit;
+    padding: 2% 14% 2% 14%;
+  }
+  .full-width{
+    padding: 0px;
+  }
+  .outer-container{
+    background-color: #ea8f08;
+    height: 100vh;
+  }
+  .head p{
+    text-transform: capitalize;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+  }
+  .pad-right{
+    padding-left: 0px;
+    padding-right: 1%;
+  }
+  .counter p{
+    text-align: center;
+    font-size: 100px;
+    font-weight: bolder;
+    color: white;
+  }
+}
+
+@media (min-width: 1900px){
+  .logo-container img{
+    width:inherit;
+    padding: 2% 14% 2% 14%;
+  }
+  .full-width{
+    padding: 0px;
+  }
+  .outer-container{
+    background-color: #ea8f08;
+    height: 100vh;
+  }
+  .head p{
+    text-transform: capitalize;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+  }
+  .pad-right{
+    padding-left: 0px;
+    padding-right: 1%;
+  }
+  .counter p{
+    text-align: center;
+    font-size: 110px;
+    font-weight: bolder;
+    color: white;
+  }
+}
+
+/*Slider*/
+#jssor_1{
+  position: relative;
+  margin: 0 auto;
+  top: 0px;
+  left: 0px;
+  width: 600px;
+  height: 300px;
+  overflow: hidden;
+  visibility: hidden;
+}
