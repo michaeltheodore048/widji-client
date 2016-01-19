@@ -2,11 +2,14 @@
  * (c) Mimin Admin Page v1.0
  */
 
-/*Custom css*/
+/*Radion Custom css*/
 div#tabsDemo3Content{
   padding: 20px !important;
   text-align: left;
   color: #8F8686 !important;
+}
+.padding-7{
+  padding-top: 7px;
 }
 
 body {
