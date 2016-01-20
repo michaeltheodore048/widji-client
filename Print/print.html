@@ -17,6 +17,7 @@
 		<span class="number">A 082</span>
 		<br>
 		Terima kasih atas kunjungan anda<br>
+
 		<script>
 		var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 		var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
@@ -24,7 +25,7 @@
 		var day = date.getDate();
 		var month = date.getMonth();
 		var thisDay = date.getDay(),
-		    thisDay = myDays[thisDay];
+		thisDay = myDays[thisDay];
 		var yy = date.getYear();
 		var year = (yy < 1000) ? yy + 1900 : yy;
 		var d = new Date();
@@ -32,25 +33,30 @@
 		var curr_min = d.getMinutes();
 		curr_min = curr_min + "";
 		if (curr_min.length == 1) {
-		    curr_min = "0" + curr_min;
+			curr_min = "0" + curr_min;
 		}
 		document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year + " " + curr_hour + ":" + curr_min);
 		</script>
 
 		<!-- Print button -->
 		<form>
-		<input id="print" type="button" value="Print Page" onClick="window.print()" style="display:none;">
+			<input id="print" type="button" value="Print Page" onClick="window.print()" style="display:none;">
 		</form>
 
-		<!-- Check key '5' is pressed -->
 		<script>
+		// Check key 2 is pressed
 		window.addEventListener("keypress", checkKeyPressed, false);
 
-			function checkKeyPressed(e) {
-		    if (e.keyCode == "53") {
-		        document.getElementById("print").click();
-		    }
+		function checkKeyPressed(e) {
+			if (e.keyCode == "50") {
+				// document.getElementById("print").click();
+				alert("key 2 pressed");
+			}else if (e.keyCode == "53") {
+				alert("key 5 pressed");
+			}else if (e.keyCode == "56") {
+				alert("key 8 pressed");
 			}
+		}
 		</script>
 
 		<script language="VBScript">
@@ -97,5 +103,5 @@
 		document.write wbvers & """> </object>"
 		</script>
 
-</body>
-</html>
+	</body>
+	</html>
