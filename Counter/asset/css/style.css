@@ -3,6 +3,7 @@
  */
 
 /*Radion Custom css*/
+
 div#tabsDemo3Content{
   padding: 20px !important;
   text-align: left;
@@ -11,6 +12,13 @@ div#tabsDemo3Content{
 .padding-7{
   padding-top: 7px;
 }
+i.icon-close.icons{
+  visibility: hidden;
+}
+.dtp-content.animated.pulse{
+  max-width: 340px;
+}
+/*End Radion Custom css*/
 
 body {
   font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;

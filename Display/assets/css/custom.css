@@ -2,8 +2,16 @@ body{
   overflow-y: hidden;
 }
 body, .bg-cover{
-  background-color: #000E40
+  background-color: #000E40;
 }
+
+/*slideshow*/
+.slideshow{
+  /*background-image: url("../img/red.jpg");*/
+  background-size: cover;
+  height: 100vh;
+}
+/*end slideshow*/
 
 @media (min-width: 970px) {
   .logo-container img{
