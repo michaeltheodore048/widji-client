@@ -8,10 +8,15 @@ body, .bg-cover{
 /*slideshow*/
 .slideshow{
   /*background-image: url("../img/red.jpg");*/
-  background-size: cover;
-  height: 100vh;
+  background-size:cover;
+  height: 97vh;
 }
 /*end slideshow*/
+
+marquee{
+  text-transform: capitalize;
+  color: white;
+}
 
 @media (min-width: 970px) {
   .logo-container img{
@@ -35,7 +40,7 @@ body, .bg-cover{
     padding-left: 0px;
     padding-right: 1%;
   }
-  .counter p{
+  .bg-cover{
     text-align: center;
     font-size: 75px;
     font-weight: bolder;
@@ -55,6 +60,9 @@ body, .bg-cover{
     background-color: #ea8f08;
     height: 100vh;
   }
+  .head{
+    margin-bottom: -10px;
+  }
   .head p{
     text-transform: capitalize;
     color: white;
@@ -65,12 +73,21 @@ body, .bg-cover{
     padding-left: 0px;
     padding-right: 1%;
   }
-  .counter p{
+  .bg-cover{
     text-align: center;
-    font-size: 100px;
-    font-weight: bolder;
+    font-size: 97px;
     color: white;
   }
+  #tanggal{
+    text-align: center;
+    font-size: 36px;
+    color: white;
+  }
+  #jam{
+    text-align: center;
+    color: white;
+    margin-top: -17px;
+    font-size: 72px;
 }
 
 @media (min-width: 1900px){

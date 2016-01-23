@@ -15,8 +15,16 @@
 <body>
 
   <div class="col-md-12 col-sm-12 full-width">
-    <div class="col-md-8 slideshow full-width">
-
+    <div class="col-md-8 full-width">
+      <div class="col-md-12 slideshow full-width">
+        <!-- slideshow -->
+      </div>
+      <div class="col-md-12 running-text full-width">
+        <marquee behavior="scroll" direction="left">this is running text this is running text this is running text this is running text
+          this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
+          this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
+        </marquee>
+      </div>
     </div>
 
     <div class="col-md-4 col-sm-4 full-width">
@@ -37,11 +45,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <p>A <span class="nomorAntri">?</span></p>
+                <span class="jenisAntri">A</span> <span class="nomorAntri">?</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <p>1</p>
+              1
             </div>
           </div>
           <!-- baris 2 -->
@@ -56,11 +64,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <p>C 06</p>
+                C 06
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <p>3</p>
+              3
             </div>
           </div>
           <!-- baris 3 -->
@@ -75,12 +83,23 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <p>B 11</p>
+                B 11
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <p>6</p>
+              6
             </div>
+          </div>
+          <!-- baris tanggal -->
+          <div class="col-md-12 full-width" id="tanggal">
+            <script>
+            // document.write(date);
+            </script>
+          </div>
+          <div class="col-md-12" id="jam">
+            <script>
+            // document.write(time);
+            </script>
           </div>
 
         </div>
@@ -108,16 +127,33 @@
 
     function doSlideshow(){
       if(nextimage>=images.length){nextimage=0;}
-      $('.slideshow')
-      .css('background-image','url("'+images[nextimage++]+'")')
-      .fadeIn(500,function(){
+      $('.slideshow').css('background-image','url("'+images[nextimage++]+'")').fadeIn(500,function(){
         setTimeout(doSlideshow,1000);
       });
     }
 
   });
   </script>
-  <!-- slideshow -->
+  <!-- end slideshow -->
+
+  <!-- tanggal & waktu -->
+  <script>
+  setInterval(function() {
+    var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+    var now = new Date();
+
+    var date = [myDays[now.getDay()],",",now.getDate(),
+    months[now.getMonth()],
+    now.getFullYear()].join(' ');
+    var time = now.getHours() + ':' + now.getMinutes()
+
+    // $('.jam').text(time);
+    // $('.tanggal').text(date);
+    document.getElementById('jam').innerHTML = time;
+    document.getElementById('tanggal').innerHTML = date;
+  }, 1000);
+  </script>
 
   <!-- script API  -->
   <script type="text/javascript" src="assets/js/caller.js"></script>
