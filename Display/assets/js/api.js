@@ -79,3 +79,77 @@ function login(ip){
     }
   });
 }
+
+function refreshAntrian(){
+  $.ajax({
+    url: domain + '/queueByCategoryCount',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ"
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+        $('.labela').text(obj.a);
+        $('.labelb').text(obj.b);
+        $('.labelc').text(obj.c);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+      token = 'mczal';
+    }
+  });
+}
+
+function nextCustomer(ip,category){
+  $.ajax({
+    url: domain + '/nextCustomer',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ",
+      myIp:ip,
+      category:category
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+      token = 'mczal';
+    }
+  });
+}
+
+function display(){
+  $.ajax({
+    url: domain + '/display',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      $('#antrian1').text(obj.category_1 + " " + obj.nomor_antrian_1);
+      $('#counter1').text(obj.counter_1);
+      $('#antrian2').text(obj.category_2 + " " + obj.nomor_antrian_2);
+      $('#counter2').text(obj.counter_2);
+      $('#antrian3').text(obj.category_3 + " " + obj.nomor_antrian_3);
+      $('#counter3').text(obj.counter_3);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+      // token = 'mczal';
+    }
+  });
+}

@@ -7,6 +7,7 @@
   <!-- plugins -->
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
   <script type="text/javascript" src="assets/js/noty/jquery.noty.js"></script>
+  <script type="text/javascript" src="assets/js/api.js"></script>
 
   <!-- css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
@@ -45,11 +46,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <span class="jenisAntri">A</span> <span class="nomorAntri">?</span>
+                <span id="antrian1">?</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              1
+              <span id="counter1">?</span>
             </div>
           </div>
           <!-- baris 2 -->
@@ -64,11 +65,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                C 06
+                <span id="antrian2">?</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              3
+              <span id="counter2">?</span>
             </div>
           </div>
           <!-- baris 3 -->
@@ -83,11 +84,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                B 11
+                <span id="antrian3">?</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              6
+              <span id="counter3">?</span>
             </div>
           </div>
           <!-- baris tanggal -->
@@ -121,6 +122,10 @@
   <!-- slideshow -->
   <script type="text/javascript">
   $(document).ready(function(){
+    setInterval(function(){
+      display();
+    },1000);
+
     var images=new Array('assets/img/red.jpg','assets/img/blue.jpg','assets/img/purple.jpg');
     var nextimage=0;
     doSlideshow();

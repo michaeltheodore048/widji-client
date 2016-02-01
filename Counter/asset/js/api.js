@@ -79,3 +79,50 @@ function login(ip){
     }
   });
 }
+
+function refreshAntrian(){
+  $.ajax({
+    url: domain + '/queueByCategoryCount',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ"
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+        $('.labela').text(obj.a);
+        $('.labelb').text(obj.b);
+        $('.labelc').text(obj.c);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+      token = 'mczal';
+    }
+  });
+}
+
+function nextCustomer(ip,category){
+  $.ajax({
+    url: domain + '/nextCustomer',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ",
+      myIp:ip,
+      category:category
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+      token = 'mczal';
+    }
+  });
+}

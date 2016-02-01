@@ -10,11 +10,12 @@
 	<meta name="keyword" content="">
 	<title>RadionTech</title>
 
+	<!-- plugins -->
+	<script type="text/javascript" src="asset/js/api.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 	<!-- start: Css -->
 	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
-
-	<!-- plugins -->
-	<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/select2.min.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/handsontable.full.min.css"/>
@@ -27,9 +28,6 @@
 	<link href="asset/css/style.css" rel="stylesheet">
 	<!-- end: Css -->
 
-	<!-- javascript -->
-	<script src="asset/js/jquery-2.2.0.js"></script>
-
 	<link rel="shortcut icon" href="asset/img/logomi.png">
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -39,6 +37,7 @@
 </head>
 
 <body id="mimin" class="dashboard">
+
 	<!-- start: Header -->
 	<nav class="navbar navbar-default header navbar-fixed-top">
 		<div class="col-md-12 nav-wrapper">
@@ -47,7 +46,7 @@
 					<b>RADICAL COUNTER</b>
 				</a>
 				<ul class="nav navbar-nav navbar-right user-nav">
-					<li class="user-name"><span>Counter 1 : </span>Akihiko Avaron</li>
+					<li class="user-name"><span>Counter <span class="counterNumber"></span> : </span>Akihiko Avaron</li>
 					<li class="dropdown avatar-dropdown">
 						<img src="asset/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
 						<ul class="dropdown-menu user-dropdown">
@@ -278,21 +277,21 @@
 										<div class="col-md-9">
 
 											<!-- button -->
-											<input type="button" class="btn btn-primary col-md-2" value="A">
+											<input type="button" class="btn btn-primary col-md-2" id="btnA" value="A">
 											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-2" value="B">
+											<input type="button" class="btn btn-primary col-md-2" id="btnB" value="B">
 											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-2" value="C">
+											<input type="button" class="btn btn-primary col-md-2" id="btnC" value="C">
 											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-3" value="Refresh">
+											<input type="button" class="btn btn-primary col-md-3" id="btnRefresh" value="Refresh">
 											<br><br>
 
 											<!-- label -->
-											<span class="label label-default col-md-2" style="font-size:20px;">0</span>
+											<span class="label label-default col-md-2 labela" style="font-size:20px;">?</span>
 											<div class="col-md-1"></div>
-											<span class="label label-default col-md-2" style="font-size:20px;">0</span>
+											<span class="label label-default col-md-2 labelb" style="font-size:20px;">?</span>
 											<div class="col-md-1"></div>
-											<span class="label label-default col-md-2" style="font-size:20px;">0</span>
+											<span class="label label-default col-md-2 labelc" style="font-size:20px;">?</span>
 										</div>
 										<!-- exit button -->
 										<div class="col-md-3">
@@ -476,10 +475,33 @@
     <script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/master/locale/id.js"></script>
     <script type="text/plain" src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
 
-		<!-- custom -->
+		<!-- custom javascript-->
 		<script src="asset/js/main.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function(){
+			var myIp;
+			$.get('http://l2.io/ip.js').success(function(data){
+				var temp = data.split("'");
+				myIp = temp[1];
+				// alert(myIp);
+				checkCounter(myIp);
+			});
+
+			$('#btnA').click(function(){
+				nextCustomer(myIp,"a");
+				refreshAntrian();
+			});
+			$('#btnB').click(function(){
+				nextCustomer(myIp,"b");
+				refreshAntrian();
+			});
+			$('#btnC').click(function(){
+				nextCustomer(myIp,"c");
+				refreshAntrian();
+			});
+			$('#btnRefresh').click(function() {
+				refreshAntrian();
+			})
 
 			var container = document.getElementById('basic_example');
 

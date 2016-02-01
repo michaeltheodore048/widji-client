@@ -6,127 +6,68 @@
 </head>
 <body>
 
-	<script type="text/javascript">
-	$.get('http://l2.io/ip.js').success(function(data){
-		var temp = data.split("'");
-		alert(temp[1]);
-	});
-	</script>
+	<div class="container">
+		ANGKASA PUTRA
+		<br><br>
+		ANGKASA PUTRA PRINT DIGITAL<br>
+		Jl Cihamplas No. 77 Bandung<br>
+		Tlp/Fax. 022-4201676<br>
+		<br>
+		PRINT
+		<br>
+		<span class="number"></span>
+		<br>
+		Terima kasih atas kunjungan anda<br>
 
-	<!-- <script type="text/javascript">
-	var x = document.getElementById('getip');
-	var y = x.getElementsByTagName('script');
-	alert(y);
-</script> -->
+		<script type="text/javascript" src="api.js"></script>
+		<script>
+		newEntry();
 
-<div class="container">
-	ANGKASA PUTRA
-	<br><br>
-	ANGKASA PUTRA PRINT DIGITAL<br>
-	Jl Cihamplas No. 77 Bandung<br>
-	Tlp/Fax. 022-4201676<br>
-	<br>
-	PRINT
-	<br>
-	<span class="number"></span>
-	<br>
-	Terima kasih atas kunjungan anda<br>
-
-	<script type="text/javascript" src="api.js"></script>
-	<script>
-	// auth();
-	newEntry();
-
-	var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-	var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-	var date = new Date();
-	var day = date.getDate();
-	var month = date.getMonth();
-	var thisDay = date.getDay(),
-	thisDay = myDays[thisDay];
-	var yy = date.getYear();
-	var year = (yy < 1000) ? yy + 1900 : yy;
-	var d = new Date();
-	var curr_hour = d.getHours();
-	var curr_min = d.getMinutes();
-	curr_min = curr_min + "";
-	if (curr_min.length == 1) {
-		curr_min = "0" + curr_min;
-	}
-	document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year + " " + curr_hour + ":" + curr_min);
-	</script>
-
-	<!-- Print button -->
-	<form>
-		<input id="print" type="button" value="Print Page" onClick="window.print()" style="display:none;">
-	</form>
-
-	<script>
-
-	// Check key is pressed
-	window.addEventListener("keypress", checkKeyPressed, false);
-
-	function checkKeyPressed(e) {
-		if (e.keyCode == "50") {
-			// document.getElementById("print").click();
-			// alert("key 2 pressed");
-			newEntry('A');
-		}else if (e.keyCode == "53") {
-			newEntry('B');
-		}else if (e.keyCode == "56") {
-			newEntry('C');
+		var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+		var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+		var date = new Date();
+		var day = date.getDate();
+		var month = date.getMonth();
+		var thisDay = date.getDay(),
+		thisDay = myDays[thisDay];
+		var yy = date.getYear();
+		var year = (yy < 1000) ? yy + 1900 : yy;
+		var d = new Date();
+		var curr_hour = d.getHours();
+		var curr_min = d.getMinutes();
+		curr_min = curr_min + "";
+		if (curr_min.length == 1) {
+			curr_min = "0" + curr_min;
 		}
-	}
+		document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year + " " + curr_hour + ":" + curr_min);
+		</script>
 
-	// function getip(json){
-	// 	alert(json.ip); // alerts the ip address
-	// }
+		<script>
 
-	</script>
+		// Check key is pressed
+		window.addEventListener("keypress", checkKeyPressed, false);
 
-	<script language="VBScript">
-	// THIS VB SCRIP REMOVES THE PRINT DIALOG BOX AND PRINTS TO YOUR DEFAULT PRINTER
-	Sub window_onunload()
-	On Error Resume Next
-	Set WB = nothing
-	On Error Goto 0
-	End Sub
+		function checkKeyPressed(e) {
+			if (e.keyCode == "50") {
+				newEntry('A');
+				setTimeout(function(){
+					window.print();
+				},500);
 
-	Sub Print()
-	OLECMDID_PRINT = 6
-	OLECMDEXECOPT_DONTPROMPTUSER = 2
-	OLECMDEXECOPT_PROMPTUSER = 1
+			}else if (e.keyCode == "53") {
+				newEntry('B');
+				setTimeout(function(){
+					window.print();
+				},500);
+			}else if (e.keyCode == "56") {
+				newEntry('C');
+				setTimeout(function(){
+					window.print();
+				},500);
+			}
+		}
 
+		</script>
 
-	On Error Resume Next
-
-	If DA Then
-	call WB.ExecWB(OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER,1)
-
-	Else
-	call WB.IOleCommandTarget.Exec(OLECMDID_PRINT ,OLECMDEXECOPT_DONTPROMPTUSER,"","","")
-
-	End If
-
-	If Err.Number <> 0 Then
-	If DA Then
-	Alert("Nothing Printed :" & err.number & " : " & err.description)
-	Else
-	HandleError()
-	End if
-	End If
-	On Error Goto 0
-	End Sub
-
-	If DA Then
-	wbvers="8856F961-340A-11D0-A96B-00C04FD705A2"
-	Else
-	wbvers="EAB22AC3-30C1-11CF-A7EB-0000C05BAE0B"
-	End If
-
-	document.write "<object ID=""WB"" WIDTH=0 HEIGHT=0 CLASSID=""CLSID:"
-	document.write wbvers & """> </object>"
-	</script>
-
-</body>
-</html>
+	</body>
+	</html>
