@@ -77,227 +77,196 @@
 				<div class="col-md-12 padding-0">
 					<div class="col-md-7 padding-0">
 						<div class="col-md-12 padding-0">
-							<!-- tab heading -->
-							<div class="col-md-12 tabs-area" style="margin-top:0px;">
-								<ul id="tabs-demo3" class="nav nav-tabs nav-tabs-v2" role="tablist">
-									<li role="presentation" class="active">
-										<a href="#tabs-demo3-area1" id="tabs-demo3-1" role="tab" data-toggle="tab" aria-expanded="true">B & W</a>
-									</li>
-									<li role="presentation" class="">
-										<a href="#tabs-demo3-area2" role="tab" id="tabs-demo3-2" data-toggle="tab" aria-expanded="false">Full Color</a>
-									</li>
-									<li role="presentation">
-										<a href="#tabs-demo3-area3" role="tab" id="tabs-demo3-3" data-toggle="tab" aria-expanded="false">Outdoor</a>
-									</li>
-									<li role="presentation" class="">
-										<a href="#tabs-demo3-area4" role="tab" id="tabs-demo3-4" data-toggle="tab" aria-expanded="false">Lainnya</a>
-									</li>
-									<li role="presentation" class="">
-										<a href="#tabs-demo3-area4" role="tab" id="tabs-demo3-5" data-toggle="tab" aria-expanded="false">Item Tambahan</a>
-									</li>
-									<li role="presentation" class="">
-										<a href="#tabs-demo3-area4" role="tab" id="tabs-demo3-6" data-toggle="tab" aria-expanded="false">Binding</a>
-									</li>
-									<li role="presentation" class="">
-										<a href="#tabs-demo3-area4" role="tab" id="tabs-demo3-7" data-toggle="tab" aria-expanded="false">Foto Copy</a>
-									</li>
-								</ul>
-								<!-- tab content -->
-								<div id="tabsDemo3Content" class="tab-content tabs-content-v2">
-									<div role="tabpanel" class="tab-pane fade active in" id="tabs-demo3-area1" aria-labelledby="tabs-demo3-area1">
-
-										<!-- media -->
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<h4>Media</h4>
-											</div>
-											<div class="panel-body">
-												<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-											</div>
+							<div class="panel box-v4">
+								<div class="panel-body">
+									<table class="table" id="tablePesanan">
+										<thead>
+											<tr>
+												<th  class="col-md-1">No Pesanan</th>
+												<th>Jenis</th>
+												<th>Tipe Kertas</th>
+												<th>Ukuran Kertas</th>
+												<th>Qty</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<label style="padding-top:8px;" id="noPesanan">1</label>
+												</td>
+												<td>
+													<select class="form-control">
+														<option disabled selected></option>
+														<option>option one</option>
+														<option>option two</option>
+														<option>option three</option>
+														<option>option four</option>
+													</select>
+												</td>
+												<td>
+													<select class="form-control">
+														<option disabled selected></option>
+														<option>option one</option>
+														<option>option two</option>
+														<option>option three</option>
+														<option>option four</option>
+													</select>
+												</td>
+												<td>
+													<select class="form-control">
+														<option disabled selected></option>
+														<option>option one</option>
+														<option>option two</option>
+														<option>option three</option>
+														<option>option four</option>
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<button class=" btn btn-circle btn-outline btn-sm btn-default right"  id="addRowButton" value="primary">
+										<span class="fa fa-plus fa-lg"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="col-md-12 padding-0">
+							<div class="panel box-v4">
+								<div class="panel-body" style="padding-top:30px;">
+									<div class="form-group">
+										<label class="col-sm-2 control-label text-right padding-7">No. Bon</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" disabled="">
 										</div>
-
-										<!-- ukuran & jenis -->
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<h4>Ukuran & Jenis</h4>
-											</div>
-											<div class="panel-body">
-												<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-											</div>
+									</div>
+									<br><br>
+									<div class="form-group">
+										<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" disabled="">
 										</div>
-
-										<div class="panel panel-default">
-											<div class="panel-body">
-												<div class="col-md-9"></div>
-												<div class="col-md-3 padding-0">
-													<div class="form-group">
-														<label class="col-sm-4 control-label text-right padding-7">Jumlah</label>
-														<div class="col-sm-8">
-															<input type="text" class="form-control" value="1">
-														</div>
-													</div>
-												</div>
-												<br><br><br><br><br>
-												<div class="col-md-12 padding-7"></div>
-												<div class="col-md-9">
-													<div class="form-group form-animate-checkbox">
-                              <input type="checkbox" class="checkbox" id="validate_agree" name="validate_agree">
-                              <label>Area</label>
-                          </div>
-												</div>
-												<div class="form-group">
-													<input type="button" class="btn btn-primary col-md-3" value="OK">
-												</div>
-											</div>
+									</div>
+									<div class="form-group form-animate-text" style="margin-top:40px !important;">
+										<input type="text" class="form-text" required>
+										<span class="bar"></span>
+										<label>Pelanggan</label>
+									</div>
+									<div class="form-group form-animate-text" style="margin-top:40px !important;">
+										<div class="col-sm-8">
+											<input type="text" class="form-text mask-phone_us" required>
+											<span class="bar"></span>
+											<label>Telepon</label>
 										</div>
-
-									</div>
-									<div role="tabpanel" class="tab-pane fade" id="tabs-demo3-area2" aria-labelledby="tabs-demo3-area2">
-										<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-									</div>
-									<div role="tabpanel" class="tab-pane fade" id="tabs-demo3-area3" aria-labelledby="tabs-demo3-area3">
-										<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-									</div>
-									<div role="tabpanel" class="tab-pane fade" id="tabs-demo3-area4" aria-labelledby="tabs-demo3-area4">
-										<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>                                          </div>
+										<div class="col-sm-4">
+											<input type="button" class="btn btn-primary" value="Cari nomor telepon">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-5">
-							<div class="col-md-12 padding-0">
-								<div class="panel box-v4">
-									<div class="panel-body" style="padding-top:30px;">
-										<div class="form-group">
-											<label class="col-sm-2 control-label text-right padding-7">No. Bon</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" disabled="">
-											</div>
+
+						<div class="col-md-12 padding-0">
+							<div class="panel">
+								<div class="panel-body">
+									<div class="col-md-12 padding-0">
+										<div class="responsive-table">
+											<div id="basic_example"></div>
 										</div>
-										<br><br>
-										<div class="form-group">
-											<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" disabled="">
-											</div>
-										</div>
-										<div class="form-group form-animate-text" style="margin-top:40px !important;">
-											<input type="text" class="form-text" required>
-											<span class="bar"></span>
-											<label>Pelanggan</label>
-										</div>
-										<div class="form-group form-animate-text" style="margin-top:40px !important;">
-											<div class="col-sm-8">
-												<input type="text" class="form-text mask-phone_us" required>
-												<span class="bar"></span>
-												<label>Telepon</label>
-											</div>
-											<div class="col-sm-4">
-												<input type="button" class="btn btn-primary" value="Cari nomor telepon">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-12 padding-0">
-								<div class="panel">
-									<div class="panel-body">
-										<div class="col-md-12 padding-0">
-											<div class="responsive-table">
-												<div id="basic_example"></div>
-											</div>
-											<div class="col-md-9"></div>
-											<div class="col-md-3">
-												<input type="button" class="btn btn-primary" value="Hapus Detil">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-12 padding-0">
-								<div class="panel">
-									<div class="panel-heading">
-										<h4>Total Penjualan</h4>
-									</div>
-									<div class="panel-body">
-										<div class="col-md-6 padding-0">
-											<!-- panel jenis pembayaran-->
-											<div class="panel panel-default">
-												<div class="panel-heading">
-													<h4 class="panel-title">Jenis Pembayaran</h4>
-												</div>
-												<div class="panel-body">
-													<!-- radio button -->
-													<div class="col-sm-4 padding-0">
-														<input type="radio" name="option"> Cash
-													</div>
-													<div class="col-sm-4 padding-0">
-														<input type="radio" name="option"> CC
-													</div>
-													<div class="col-sm-4 padding-0">
-														<input type="radio" name="option"> DB
-													</div>
-
-												</div>
-											</div>
-
-											<!-- Date Picker -->
-											<div class="form-group form-animate-text">
-												<input type="text" class="form-text date" required="" data-dtp="dtp_HtEez">
-												<span class="bar"></span>
-												<label><span class="fa fa-calendar"></span> Diambil Tanggal:</label>
-											</div>
-
-											<!-- Time Picker -->
-											<div class="form-group form-animate-text">
-												<input type="text" class="form-text time" required="" data-dtp="dtp_tj708">
-												<span class="bar"></span>
-												<label><span class="fa fa-clock-o"></span> Diambil Jam:</label>
-											</div>
-
-										</div>
-										<div class="col-md-6">
-											<!-- textarea keterangan -->
-											<b>Keterangan</b><br>
-											<textarea name="keterangan" rows="8" cols="33"></textarea>
-											<br><br>
-											<!-- button -->
-											<input type="button" class="btn btn-primary col-md-5" value="Batal">
-											<div class="col-md-2"></div>
-											<input type="button" class="btn btn-primary col-md-5" value="Simpan">
-										</div>
-									</div>
-								</div>
-
-								<!-- Pilih jenis antrian -->
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<div class="col-md-9">
-
-											<!-- button -->
-											<input type="button" class="btn btn-primary col-md-2" id="btnA" value="A">
-											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-2" id="btnB" value="B">
-											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-2" id="btnC" value="C">
-											<div class="col-md-1"></div>
-											<input type="button" class="btn btn-primary col-md-3" id="btnRefresh" value="Refresh">
-											<br><br>
-
-											<!-- label -->
-											<span class="label label-default col-md-2 labela" style="font-size:20px;">?</span>
-											<div class="col-md-1"></div>
-											<span class="label label-default col-md-2 labelb" style="font-size:20px;">?</span>
-											<div class="col-md-1"></div>
-											<span class="label label-default col-md-2 labelc" style="font-size:20px;">?</span>
-										</div>
-										<!-- exit button -->
+										<div class="col-md-9"></div>
 										<div class="col-md-3">
-											<div class="col-md-3"></div>
-											<input type="button" class="btn btn-primary col-md-9" style="margin-top:17px;" value="Exit">
+											<input type="button" class="btn btn-primary" value="Hapus Detil">
 										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 padding-0">
+							<div class="panel">
+								<div class="panel-heading">
+									<h4>Total Penjualan</h4>
+								</div>
+								<div class="panel-body">
+									<div class="col-md-6 padding-0">
+										<!-- panel jenis pembayaran-->
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<h4 class="panel-title">Jenis Pembayaran</h4>
+											</div>
+											<div class="panel-body">
+												<!-- radio button -->
+												<div class="col-sm-4 padding-0">
+													<input type="radio" name="option"> Cash
+												</div>
+												<div class="col-sm-4 padding-0">
+													<input type="radio" name="option"> CC
+												</div>
+												<div class="col-sm-4 padding-0">
+													<input type="radio" name="option"> DB
+												</div>
+
+											</div>
+										</div>
+
+										<!-- Date Picker -->
+										<div class="form-group form-animate-text">
+											<input type="text" class="form-text date" required="" data-dtp="dtp_HtEez">
+											<span class="bar"></span>
+											<label><span class="fa fa-calendar"></span> Diambil Tanggal:</label>
+										</div>
+
+										<!-- Time Picker -->
+										<div class="form-group form-animate-text">
+											<input type="text" class="form-text time" required="" data-dtp="dtp_tj708">
+											<span class="bar"></span>
+											<label><span class="fa fa-clock-o"></span> Diambil Jam:</label>
+										</div>
+
+									</div>
+									<div class="col-md-6">
+										<!-- textarea keterangan -->
+										<b>Keterangan</b><br>
+										<textarea name="keterangan" rows="8" cols="33"></textarea>
+										<br><br>
+										<!-- button -->
+										<input type="button" class="btn btn-primary col-md-5" value="Batal">
+										<div class="col-md-2"></div>
+										<input type="button" class="btn btn-primary col-md-5" value="Simpan">
+									</div>
+								</div>
+							</div>
+
+							<!-- Pilih jenis antrian -->
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="col-md-9">
+
+										<!-- button -->
+										<input type="button" class="btn btn-primary col-md-2" id="btnA" value="A">
+										<div class="col-md-1"></div>
+										<input type="button" class="btn btn-primary col-md-2" id="btnB" value="B">
+										<div class="col-md-1"></div>
+										<input type="button" class="btn btn-primary col-md-2" id="btnC" value="C">
+										<div class="col-md-1"></div>
+										<input type="button" class="btn btn-primary col-md-3" id="btnRefresh" value="Refresh">
+										<br><br>
+
+										<!-- label -->
+										<span class="label label-default col-md-2 labela" style="font-size:20px;">?</span>
+										<div class="col-md-1"></div>
+										<span class="label label-default col-md-2 labelb" style="font-size:20px;">?</span>
+										<div class="col-md-1"></div>
+										<span class="label label-default col-md-2 labelc" style="font-size:20px;">?</span>
+									</div>
+									<!-- exit button -->
+									<div class="col-md-3">
+										<div class="col-md-3"></div>
+										<input type="button" class="btn btn-primary col-md-9" style="margin-top:17px;" value="Exit">
 									</div>
 								</div>
 							</div>
@@ -306,364 +275,423 @@
 				</div>
 			</div>
 		</div>
-		<!-- end: content -->
+	</div>
+	<!-- end: content -->
 
-		<!-- start: Mobile -->
-		<div id="mimin-mobile" class="reverse">
-			<div class="mimin-mobile-menu-list">
-				<div class="col-md-12 sub-mimin-mobile-menu-list animated fadeInLeft">
-					<ul class="nav nav-list">
-						<li class="active ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa-home fa"></span>Dashboard
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="dashboard-v1.html">Dashboard v.1</a></li>
-								<li><a href="dashboard-v2.html">Dashboard v.2</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa-diamond fa"></span>Layout
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="topnav.html">Top Navigation</a></li>
-								<li><a href="boxed.html">Boxed</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa-area-chart fa"></span>Charts
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="chartjs.html">ChartJs</a></li>
-								<li><a href="morris.html">Morris</a></li>
-								<li><a href="flot.html">Flot</a></li>
-								<li><a href="sparkline.html">SparkLine</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa fa-pencil-square"></span>Ui Elements
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="color.html">Color</a></li>
-								<li><a href="weather.html">Weather</a></li>
-								<li><a href="typography.html">Typography</a></li>
-								<li><a href="icons.html">Icons</a></li>
-								<li><a href="buttons.html">Buttons</a></li>
-								<li><a href="media.html">Media</a></li>
-								<li><a href="panels.html">Panels & Tabs</a></li>
-								<li><a href="notifications.html">Notifications & Tooltip</a></li>
-								<li><a href="badges.html">Badges & Label</a></li>
-								<li><a href="progress.html">Progress</a></li>
-								<li><a href="sliders.html">Sliders</a></li>
-								<li><a href="timeline.html">Timeline</a></li>
-								<li><a href="modal.html">Modals</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa fa-check-square-o"></span>Forms
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="formelement.html">Form Element</a></li>
-								<li><a href="#">Wizard</a></li>
-								<li><a href="#">File Upload</a></li>
-								<li><a href="#">Text Editor</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa fa-table"></span>Tables
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="datatables.html">Data Tables</a></li>
-								<li><a href="handsontable.html">handsontable</a></li>
-								<li><a href="tablestatic.html">Static</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a href="calendar.html">
-								<span class="fa fa-calendar-o"></span>Calendar
-							</a>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa fa-envelope-o"></span>Mail
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="mail-box.html">Inbox</a></li>
-								<li><a href="compose-mail.html">Compose Mail</a></li>
-								<li><a href="view-mail.html">View Mail</a></li>
-							</ul>
-						</li>
-						<li class="ripple">
-							<a class="tree-toggle nav-header">
-								<span class="fa fa-file-code-o"></span>Pages
-								<span class="fa-angle-right fa right-arrow text-right"></span>
-							</a>
-							<ul class="nav nav-list tree">
-								<li><a href="forgotpass.html">Forgot Password</a></li>
-								<li><a href="login.html">SignIn</a></li>
-								<li><a href="reg.html">SignUp</a></li>
-								<li><a href="article-v1.html">Article v1</a></li>
-								<li><a href="search-v1.html">Search Result v1</a></li>
-								<li><a href="productgrid.html">Product Grid</a></li>
-								<li><a href="profile-v1.html">Profile v1</a></li>
-								<li><a href="invoice-v1.html">Invoice v1</a></li>
-							</ul>
-						</li>
-						<li class="ripple"><a class="tree-toggle nav-header"><span class="fa "></span> MultiLevel  <span class="fa-angle-right fa right-arrow text-right"></span> </a>
-							<ul class="nav nav-list tree">
-								<li><a href="view-mail.html">Level 1</a></li>
-								<li><a href="view-mail.html">Level 1</a></li>
-								<li class="ripple">
-									<a class="sub-tree-toggle nav-header">
-										<span class="fa fa-envelope-o"></span> Level 1
-										<span class="fa-angle-right fa right-arrow text-right"></span>
-									</a>
-									<ul class="nav nav-list sub-tree">
-										<li><a href="mail-box.html">Level 2</a></li>
-										<li><a href="compose-mail.html">Level 2</a></li>
-										<li><a href="view-mail.html">Level 2</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="credits.html">Credits</a></li>
-					</ul>
-				</div>
+	<!-- start: Mobile -->
+	<div id="mimin-mobile" class="reverse">
+		<div class="mimin-mobile-menu-list">
+			<div class="col-md-12 sub-mimin-mobile-menu-list animated fadeInLeft">
+				<ul class="nav nav-list">
+					<li class="active ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa-home fa"></span>Dashboard
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="dashboard-v1.html">Dashboard v.1</a></li>
+							<li><a href="dashboard-v2.html">Dashboard v.2</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa-diamond fa"></span>Layout
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="topnav.html">Top Navigation</a></li>
+							<li><a href="boxed.html">Boxed</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa-area-chart fa"></span>Charts
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="chartjs.html">ChartJs</a></li>
+							<li><a href="morris.html">Morris</a></li>
+							<li><a href="flot.html">Flot</a></li>
+							<li><a href="sparkline.html">SparkLine</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa fa-pencil-square"></span>Ui Elements
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="color.html">Color</a></li>
+							<li><a href="weather.html">Weather</a></li>
+							<li><a href="typography.html">Typography</a></li>
+							<li><a href="icons.html">Icons</a></li>
+							<li><a href="buttons.html">Buttons</a></li>
+							<li><a href="media.html">Media</a></li>
+							<li><a href="panels.html">Panels & Tabs</a></li>
+							<li><a href="notifications.html">Notifications & Tooltip</a></li>
+							<li><a href="badges.html">Badges & Label</a></li>
+							<li><a href="progress.html">Progress</a></li>
+							<li><a href="sliders.html">Sliders</a></li>
+							<li><a href="timeline.html">Timeline</a></li>
+							<li><a href="modal.html">Modals</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa fa-check-square-o"></span>Forms
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="formelement.html">Form Element</a></li>
+							<li><a href="#">Wizard</a></li>
+							<li><a href="#">File Upload</a></li>
+							<li><a href="#">Text Editor</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa fa-table"></span>Tables
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="datatables.html">Data Tables</a></li>
+							<li><a href="handsontable.html">handsontable</a></li>
+							<li><a href="tablestatic.html">Static</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a href="calendar.html">
+							<span class="fa fa-calendar-o"></span>Calendar
+						</a>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa fa-envelope-o"></span>Mail
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="mail-box.html">Inbox</a></li>
+							<li><a href="compose-mail.html">Compose Mail</a></li>
+							<li><a href="view-mail.html">View Mail</a></li>
+						</ul>
+					</li>
+					<li class="ripple">
+						<a class="tree-toggle nav-header">
+							<span class="fa fa-file-code-o"></span>Pages
+							<span class="fa-angle-right fa right-arrow text-right"></span>
+						</a>
+						<ul class="nav nav-list tree">
+							<li><a href="forgotpass.html">Forgot Password</a></li>
+							<li><a href="login.html">SignIn</a></li>
+							<li><a href="reg.html">SignUp</a></li>
+							<li><a href="article-v1.html">Article v1</a></li>
+							<li><a href="search-v1.html">Search Result v1</a></li>
+							<li><a href="productgrid.html">Product Grid</a></li>
+							<li><a href="profile-v1.html">Profile v1</a></li>
+							<li><a href="invoice-v1.html">Invoice v1</a></li>
+						</ul>
+					</li>
+					<li class="ripple"><a class="tree-toggle nav-header"><span class="fa "></span> MultiLevel  <span class="fa-angle-right fa right-arrow text-right"></span> </a>
+						<ul class="nav nav-list tree">
+							<li><a href="view-mail.html">Level 1</a></li>
+							<li><a href="view-mail.html">Level 1</a></li>
+							<li class="ripple">
+								<a class="sub-tree-toggle nav-header">
+									<span class="fa fa-envelope-o"></span> Level 1
+									<span class="fa-angle-right fa right-arrow text-right"></span>
+								</a>
+								<ul class="nav nav-list sub-tree">
+									<li><a href="mail-box.html">Level 2</a></li>
+									<li><a href="compose-mail.html">Level 2</a></li>
+									<li><a href="view-mail.html">Level 2</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><a href="credits.html">Credits</a></li>
+				</ul>
 			</div>
 		</div>
-		<button id="mimin-mobile-menu-opener" class="animated rubberBand btn btn-circle btn-danger">
-			<span class="fa fa-bars"></span>
-		</button>
-		<!-- end: Mobile -->
+	</div>
+	<button id="mimin-mobile-menu-opener" class="animated rubberBand btn btn-circle btn-danger">
+		<span class="fa fa-bars"></span>
+	</button>
+	<!-- end: Mobile -->
 
-		<!-- start: Javascript -->
-		<script src="asset/js/jquery.min.js"></script>
-		<script src="asset/js/jquery.ui.min.js"></script>
-		<script src="asset/js/bootstrap.min.js"></script>
+	<!-- start: Javascript -->
+	<script src="asset/js/jquery.min.js"></script>
+	<script src="asset/js/jquery.ui.min.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
 
 
-		<!-- plugins -->
-		<script src="asset/js/plugins/moment.min.js"></script>
-		<script src="asset/js/plugins/handsontable.full.min.js"></script>
-		<script src="asset/js/plugins/fullcalendar.min.js"></script>
-		<script src="asset/js/plugins/jquery.nicescroll.js"></script>
-		<script src="asset/js/plugins/jquery.vmap.min.js"></script>
-		<script src="asset/js/plugins/maps/jquery.vmap.world.js"></script>
-		<script src="asset/js/plugins/jquery.vmap.sampledata.js"></script>
-		<script src="asset/js/plugins/chart.min.js"></script>
-		<script src="asset/js/plugins/jquery.validate.min.js"></script>
-		<script src="asset/js/plugins/jquery.mask.min.js"></script>
-		<script src="asset/js/plugins/bootstrap-material-datetimepicker.js"></script>
-		<script src="asset/js/bootstrap.min.js"></script>
-		<script src="asset/js/plugins/select2.full.min.js"></script>
-		<script src="asset/js/bootstrap-datepicker.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
-    <script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/master/locale/id.js"></script>
-    <script type="text/plain" src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
+	<!-- plugins -->
+	<script src="asset/js/plugins/moment.min.js"></script>
+	<script src="asset/js/plugins/handsontable.full.min.js"></script>
+	<script src="asset/js/plugins/fullcalendar.min.js"></script>
+	<script src="asset/js/plugins/jquery.nicescroll.js"></script>
+	<script src="asset/js/plugins/jquery.vmap.min.js"></script>
+	<script src="asset/js/plugins/maps/jquery.vmap.world.js"></script>
+	<script src="asset/js/plugins/jquery.vmap.sampledata.js"></script>
+	<script src="asset/js/plugins/chart.min.js"></script>
+	<script src="asset/js/plugins/jquery.validate.min.js"></script>
+	<script src="asset/js/plugins/jquery.mask.min.js"></script>
+	<script src="asset/js/plugins/bootstrap-material-datetimepicker.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
+	<script src="asset/js/plugins/select2.full.min.js"></script>
+	<script src="asset/js/bootstrap-datepicker.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/master/locale/id.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
 
-		<!-- custom javascript-->
-		<script src="asset/js/main.js"></script>
-		<script type="text/javascript">
-		$(document).ready(function(){
-			var myIp;
-			$.get('http://l2.io/ip.js').success(function(data){
-				var temp = data.split("'");
-				myIp = temp[1];
-				// alert(myIp);
-				checkCounter(myIp);
-			});
+	<!-- custom javascript-->
+	<script src="asset/js/main.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var myIp;
+		var tingTong = new Audio('asset/sound/TING TONG.mp3');
+		var nomor = new Audio('asset/sound/nomor.mp3');
+		var antrian = new Audio('asset/sound/antrian.mp3');
+		var jenisAntrian = new Audio('asset/sound/a.mp3');
+		var nomorAntrian = new Audio('asset/sound/3.mp3');
+		var dipersilahkan = new Audio('asset/sound/dipersilahkan.mp3');
+		var ke = new Audio('asset/sound/ke.mp3');
+		var konter = new Audio('asset/sound/konter.mp3');
+		var nomorKonter = new Audio('asset/sound/7.mp3');
+		var terimaKasih = new Audio('asset/sound/terima kasih.mp3');
 
-			$('#btnA').click(function(){
-				nextCustomer(myIp,"a");
-				refreshAntrian();
-			});
-			$('#btnB').click(function(){
-				nextCustomer(myIp,"b");
-				refreshAntrian();
-			});
-			$('#btnC').click(function(){
-				nextCustomer(myIp,"c");
-				refreshAntrian();
-			});
-			$('#btnRefresh').click(function() {
-				refreshAntrian();
-			})
+		refreshAntrian();
 
-			var container = document.getElementById('basic_example');
+		$.get('http://l2.io/ip.js').success(function(data){
+			var temp = data.split("'");
+			myIp = temp[1];
+			checkCounter(myIp);
+		});
 
-			$('#datepicker').datepicker();
+		$('#btnA').click(function(){
+			nextCustomer(myIp,"a");
+			refreshAntrian();
+			tingTong.play();
+		});
+		$('#btnB').click(function(){
+			nextCustomer(myIp,"b");
+			refreshAntrian();
+			tingTong.play();
+		});
+		$('#btnC').click(function(){
+			nextCustomer(myIp,"c");
+			refreshAntrian();
+			tingTong.play();
+		});
+		$('#btnRefresh').click(function() {
+			refreshAntrian();
+		});
 
-			var data = [
-				{
-					Keterangan:"",
-					Kuantitas:"",
-					Biaya:"",
-					Total:""
-				},
-				{
-					Keterangan:"",
-					Kuantitas:"",
-					Biaya:"",
-					Total:""
-				}
-			],container,hot;
+		tingTong.addEventListener('ended',function(){
+			nomor.play();
+		});
+		nomor.addEventListener('ended',function(){
+			antrian.play();
+		});
+		antrian.addEventListener('ended',function(){
+			jenisAntrian.play();
+		});
+		jenisAntrian.addEventListener('ended',function(){
+			nomorAntrian.play();
+		});
+		nomorAntrian.addEventListener('ended',function(){
+			dipersilahkan.play();
+		});
+		dipersilahkan.addEventListener('ended',function(){
+			ke.play();
+		});
+		ke.addEventListener('ended',function(){
+			konter.play();
+		});
+		konter.addEventListener('ended',function(){
+			nomorKonter.play();
+		});
+		nomorKonter.addEventListener('ended',function(){
+			terimaKasih.play();
+		});
 
-			var hot = new Handsontable(container, {
-				data: data,
-				height: 396,
-				colHeaders: true,
-				rowHeaders: true,
-				stretchH: 'all',
-				columnSorting: true,
-				contextMenu: true,
-				colHeaders: ["Keterangan", "Kuantitas", "Biaya", "Total"]
-			});
+		$('#addRowButton').click(function() {
+			var table = document.getElementById("tablePesanan");
+			var row = table.insertRow(table.rows.length);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			cell1.innerHTML = table.rows.length-1;
+			cell2.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
+			cell3.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
+			cell4.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
+			cell5.innerHTML = '<input type="text" class="form-control">'
+		});
 
-			$("#signupForm").validate({
-				errorElement: "em",
-				errorPlacement: function(error, element) {
-					$(element.parent("div").addClass("form-animate-error"));
-					error.appendTo(element.parent("div"));
-				},
-				success: function(label) {
-					$(label.parent("div").removeClass("form-animate-error"));
-				},
-				rules: {
-					validate_firstname: "required",
-					validate_lastname: "required",
-					validate_username: {
-						required: true,
-						minlength: 2
-					},
-					validate_password: {
-						required: true,
-						minlength: 5
-					},
-					validate_confirm_password: {
-						required: true,
-						minlength: 5,
-						equalTo: "#validate_password"
-					},
-					validate_email: {
-						required: true,
-						email: true
-					},
-					validate_agree: "required"
-				},
-				messages: {
-					validate_firstname: "Please enter your firstname",
-					validate_lastname: "Please enter your lastname",
-					validate_username: {
-						required: "Please enter a username",
-						minlength: "Your username must consist of at least 2 characters"
-					},
-					validate_password: {
-						required: "Please provide a password",
-						minlength: "Your password must be at least 5 characters long"
-					},
-					validate_confirm_password: {
-						required: "Please provide a password",
-						minlength: "Your password must be at least 5 characters long",
-						equalTo: "Please enter the same password as above"
-					},
-					validate_email: "Please enter a valid email address",
-					validate_agree: "Please accept our policy"
-				}
-			});
+		var container = document.getElementById('basic_example');
 
-			// propose username by combining first- and lastname
-			$("#username").focus(function() {
-				var firstname = $("#firstname").val();
-				var lastname = $("#lastname").val();
-				if (firstname && lastname && !this.value) {
-					this.value = firstname + "." + lastname;
-				}
-			});
+		$('#datepicker').datepicker();
 
-			$('.mask-date').mask('00/00/0000');
-			$('.mask-time').mask('00:00:00');
-			$('.mask-date_time').mask('00/00/0000 00:00:00');
-			$('.mask-cep').mask('00000-000');
-			$('.mask-phone').mask('0000-0000');
-			$('.mask-phone_with_ddd').mask('(00) 0000-0000');
-			$('.mask-phone_us').mask('(000) 000-0000');
-			$('.mask-mixed').mask('AAA 000-S0S');
-			$('.mask-cpf').mask('000.000.000-00', {reverse: true});
-			$('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
-			$('.mask-money2').mask("#.##0,00", {reverse: true});
-			$('.mask-ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
-				translation: {
-					'Z': {
-						pattern: /[0-9]/, optional: true
-					}
-				}
-			});
-			$('.mask-ip_address').mask('099.099.099.099');
-			$('.mask-percent').mask('##0,00%', {reverse: true});
-			$('.mask-clear-if-not-match').mask("00/00/0000", {clearIfNotMatch: true});
-			$('.mask-placeholder').mask("00/00/0000", {placeholder: "__/__/____"});
-			$('.mask-fallback').mask("00r00r0000", {
-				translation: {
-					'r': {
-						pattern: /[\/]/,
-						fallback: '/'
-					},
-					placeholder: "__/__/____"
-				}
-			});
-			$('.mask-selectonfocus').mask("00/00/0000", {selectOnFocus: true});
-
-			var options =  {onKeyPress: function(cep, e, field, options){
-				var masks = ['00000-000', '0-00-00-00'];
-				mask = (cep.length>7) ? masks[1] : masks[0];
-				$('.mask-crazy_cep').mask(mask, options);
-			}};
-
-			$('.mask-crazy_cep').mask('00000-000', options);
-
-			var options2 =  {
-				onComplete: function(cep) {
-					alert('CEP Completed!:' + cep);
-				},
-				onKeyPress: function(cep, event, currentField, options){
-					console.log('An key was pressed!:', cep, ' event: ', event,
-					'currentField: ', currentField, ' options: ', options);
-				},
-				onChange: function(cep){
-					console.log('cep changed! ', cep);
-				},
-				onInvalid: function(val, e, f, invalid, options){
-					var error = invalid[0];
-					console.log ("Digit: ", error.v, " is invalid for the position: ", error.p, ". We expect something like: ", error.e);
-				}
-			};
-
-			$('.mask-cep_with_callback').mask('00000-000', options2);
-
-			var SPMaskBehavior = function (val) {
-				return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+		var data = [
+			{
+				Keterangan:"",
+				Kuantitas:"",
+				Biaya:"",
+				Total:""
 			},
-			spOptions = {
-				onKeyPress: function(val, e, field, options) {
-					field.mask(SPMaskBehavior.apply({}, arguments), options);
-				}
-			};
+			{
+				Keterangan:"",
+				Kuantitas:"",
+				Biaya:"",
+				Total:""
+			}
+		],container,hot;
 
-			$('.mask-sp_celphones').mask(SPMaskBehavior, spOptions);
+		var hot = new Handsontable(container, {
+			data: data,
+			height: 396,
+			colHeaders: true,
+			rowHeaders: true,
+			stretchH: 'all',
+			columnSorting: true,
+			contextMenu: true,
+			colHeaders: ["Keterangan", "Kuantitas", "Biaya", "Total"]
+		});
+
+		$("#signupForm").validate({
+			errorElement: "em",
+			errorPlacement: function(error, element) {
+				$(element.parent("div").addClass("form-animate-error"));
+				error.appendTo(element.parent("div"));
+			},
+			success: function(label) {
+				$(label.parent("div").removeClass("form-animate-error"));
+			},
+			rules: {
+				validate_firstname: "required",
+				validate_lastname: "required",
+				validate_username: {
+					required: true,
+					minlength: 2
+				},
+				validate_password: {
+					required: true,
+					minlength: 5
+				},
+				validate_confirm_password: {
+					required: true,
+					minlength: 5,
+					equalTo: "#validate_password"
+				},
+				validate_email: {
+					required: true,
+					email: true
+				},
+				validate_agree: "required"
+			},
+			messages: {
+				validate_firstname: "Please enter your firstname",
+				validate_lastname: "Please enter your lastname",
+				validate_username: {
+					required: "Please enter a username",
+					minlength: "Your username must consist of at least 2 characters"
+				},
+				validate_password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long"
+				},
+				validate_confirm_password: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 5 characters long",
+					equalTo: "Please enter the same password as above"
+				},
+				validate_email: "Please enter a valid email address",
+				validate_agree: "Please accept our policy"
+			}
+		});
+
+		// propose username by combining first- and lastname
+		$("#username").focus(function() {
+			var firstname = $("#firstname").val();
+			var lastname = $("#lastname").val();
+			if (firstname && lastname && !this.value) {
+				this.value = firstname + "." + lastname;
+			}
+		});
+
+		$('.mask-date').mask('00/00/0000');
+		$('.mask-time').mask('00:00:00');
+		$('.mask-date_time').mask('00/00/0000 00:00:00');
+		$('.mask-cep').mask('00000-000');
+		$('.mask-phone').mask('0000-0000');
+		$('.mask-phone_with_ddd').mask('(00) 0000-0000');
+		$('.mask-phone_us').mask('(000) 000-0000');
+		$('.mask-mixed').mask('AAA 000-S0S');
+		$('.mask-cpf').mask('000.000.000-00', {reverse: true});
+		$('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
+		$('.mask-money2').mask("#.##0,00", {reverse: true});
+		$('.mask-ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+			translation: {
+				'Z': {
+					pattern: /[0-9]/, optional: true
+				}
+			}
+		});
+		$('.mask-ip_address').mask('099.099.099.099');
+		$('.mask-percent').mask('##0,00%', {reverse: true});
+		$('.mask-clear-if-not-match').mask("00/00/0000", {clearIfNotMatch: true});
+		$('.mask-placeholder').mask("00/00/0000", {placeholder: "__/__/____"});
+		$('.mask-fallback').mask("00r00r0000", {
+			translation: {
+				'r': {
+					pattern: /[\/]/,
+					fallback: '/'
+				},
+				placeholder: "__/__/____"
+			}
+		});
+		$('.mask-selectonfocus').mask("00/00/0000", {selectOnFocus: true});
+
+		var options =  {onKeyPress: function(cep, e, field, options){
+			var masks = ['00000-000', '0-00-00-00'];
+			mask = (cep.length>7) ? masks[1] : masks[0];
+			$('.mask-crazy_cep').mask(mask, options);
+		}};
+
+		$('.mask-crazy_cep').mask('00000-000', options);
+
+		var options2 =  {
+			onComplete: function(cep) {
+				alert('CEP Completed!:' + cep);
+			},
+			onKeyPress: function(cep, event, currentField, options){
+				console.log('An key was pressed!:', cep, ' event: ', event,
+				'currentField: ', currentField, ' options: ', options);
+			},
+			onChange: function(cep){
+				console.log('cep changed! ', cep);
+			},
+			onInvalid: function(val, e, f, invalid, options){
+				var error = invalid[0];
+				console.log ("Digit: ", error.v, " is invalid for the position: ", error.p, ". We expect something like: ", error.e);
+			}
+		};
+
+		$('.mask-cep_with_callback').mask('00000-000', options2);
+
+		var SPMaskBehavior = function (val) {
+			return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+		},
+		spOptions = {
+			onKeyPress: function(val, e, field, options) {
+				field.mask(SPMaskBehavior.apply({}, arguments), options);
+			}
+		};
+
+		$('.mask-sp_celphones').mask(SPMaskBehavior, spOptions);
 
 		$(".select2-A").select2({
 			placeholder: "Select a state",

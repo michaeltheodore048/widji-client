@@ -21,7 +21,6 @@ function newEntry(category){
       alert(error);
     },
     complete: function(){
-      token = 'mczal';
     }
   });
 }
@@ -48,7 +47,6 @@ function checkCounter(ip){
       alert(error);
     },
     complete: function(){
-      token = 'mczal';
     }
   });
 }
@@ -75,7 +73,6 @@ function login(ip){
       alert(error);
     },
     complete: function(){
-      token = 'mczal';
     }
   });
 }
@@ -87,7 +84,7 @@ function refreshAntrian(){
     method: 'POST',
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: {
-      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ"
+      token:token
     },
     success: function(response){
       obj = JSON.parse(response);
@@ -99,7 +96,6 @@ function refreshAntrian(){
       alert(error);
     },
     complete: function(){
-      token = 'mczal';
     }
   });
 }
@@ -111,7 +107,7 @@ function nextCustomer(ip,category){
     method: 'POST',
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: {
-      token:"eyJhbGciOiJIUzI1NiJ9.dXNlcg.2Tbs8TkRGe7ZNu4CeiR5BXpK7-MMQZXc6ZTOLZiBoLQ",
+      token:token,
       myIp:ip,
       category:category
     },
@@ -122,7 +118,6 @@ function nextCustomer(ip,category){
       alert(error);
     },
     complete: function(){
-      token = 'mczal';
     }
   });
 }
