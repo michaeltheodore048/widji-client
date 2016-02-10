@@ -9,13 +9,14 @@ body, .bg-cover{
 .slideshow{
   /*background-image: url("../img/red.jpg");*/
   background-size:cover;
-  height: 97vh;
+  height: 94vh;
 }
 /*end slideshow*/
 
 marquee{
   text-transform: capitalize;
   color: white;
+  font-size: 36px;
 }
 
 @media (min-width: 970px) {

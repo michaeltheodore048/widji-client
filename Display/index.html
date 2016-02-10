@@ -1,17 +1,21 @@
 <!doctype html>
-<html lang="en" ng-app="widjiApp">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radical Display</title>
 
   <!-- plugins -->
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
   <script type="text/javascript" src="assets/js/noty/jquery.noty.js"></script>
-  <script type="text/javascript" src="assets/js/api.js"></script>
+  <script type="text/javascript" src="../API/api.js"></script>
+  <script type="text/javascript" src="assets/js/bootstrap.min.js">
+
+  </script>
 
   <!-- css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/custom.css">
+
 </head>
 <body>
 
@@ -21,7 +25,7 @@
         <!-- slideshow -->
       </div>
       <div class="col-md-12 running-text full-width">
-        <marquee behavior="scroll" direction="left">this is running text this is running text this is running text this is running text
+        <marquee id = "running-text" behavior="scroll" direction="left">this is running text this is running text this is running text this is running text
           this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
           this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
         </marquee>
@@ -46,11 +50,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <span id="antrian1">?</span>
+                <span id="antrian1">-</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <span id="counter1">?</span>
+              <span id="counter1">-</span>
             </div>
           </div>
           <!-- baris 2 -->
@@ -65,11 +69,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <span id="antrian2">?</span>
+                <span id="antrian2">-</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <span id="counter2">?</span>
+              <span id="counter2">-</span>
             </div>
           </div>
           <!-- baris 3 -->
@@ -84,11 +88,11 @@
           <div class="col-md-12 col-sm-12 counter full-width">
             <div class="col-md-9 col-sm-9 pad-right">
               <div class="col-md-12 col-sm-12 bg-cover">
-                <span id="antrian3">?</span>
+                <span id="antrian3">-</span>
               </div>
             </div>
             <div class="col-md-3 col-sm-3 bg-cover">
-              <span id="counter3">?</span>
+              <span id="counter3">-</span>
             </div>
           </div>
           <!-- baris tanggal -->

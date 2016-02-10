@@ -7,9 +7,9 @@
   <meta name="author" content="Isna Nur Azis">
   <meta name="keyword" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Miminium</title>
+  <title>Radical Login</title>
 
-  <script type="text/javascript" src="asset/js/api.js"></script>
+  <script type="text/javascript" src="../API/api.js"></script>
 
   <!-- start: Css -->
   <link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
@@ -34,7 +34,7 @@
 
   <div class="container">
 
-    <form class="form-signin" style="padding-top:10%;">
+    <form class="form-signin">
       <div class="panel periodic-login">
         <!-- <span class="atomic-number">28</span> -->
         <div class="panel-body text-center">
@@ -45,13 +45,22 @@
           <i class="icons icon-arrow-down"></i>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
             <span class="bar"></span>
-            <!-- <label>Counter Number</label> -->
-            <!-- <input type="text" class="form-control" name="counterNumber" placeholder="Counter Number" required> -->
           </div>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="text" class="form-text" name="counterNumber" required>
+            <input type="number" class="form-text" name="counterNumber" required>
             <span class="bar"></span>
             <label>Counter Number</label>
+          </div>
+          <div class="form-group form-animate-text" style="margin-top:40px !important;">
+            <input type="text" class="form-text" name="operatorName" required>
+            <span class="bar"></span>
+            <label>Operator Name</label>
+          </div>
+
+          <div class="form-group form-animate-text" style="margin-top:40px !important;">
+            <input type="password" class="form-text" name="password" required>
+            <span class="bar"></span>
+            <label>Password</label>
           </div>
           <!-- <label class="pull-left">
           <input type="checkbox" class="icheck pull-left" name="checkbox1"/> Remember me
@@ -75,36 +84,18 @@
 <!-- custom -->
 <!-- <script src="asset/js/main.js"></script> -->
 <script>
-var myIp;
-var ctNumber;
-
-
 $(document).ready(function(){
-  $('input').iCheck({
-    checkboxClass: 'icheckbox_flat-aero',
-    radioClass: 'iradio_flat-aero'
-  });
-
-  $.get('http://l2.io/ip.js').success(function(data){
-    var temp = data.split("'");
-    myIp = temp[1];
-  });
+  checkCounter();
+  $('input[name=counterNumber]').focus();
 });
 
 $('.signInButton').click(function(){
   if ($('input[name=counterNumber]').val()=="") {
     alert("Counter Number is Empty");
-  }else {
-    login(myIp);
+  } else {
+    login(localStorage.IP);
   }
 });
-
-// function login(){
-//   ctNumber = $('input[name=counterNumber]').val();
-//   alert(myIp+" "+ctNumber);
-//    login(myIp,ctNumber);
-//   login('123.123.123.123','1');
-// }
 </script>
 <!-- end: Javascript -->
 </body>

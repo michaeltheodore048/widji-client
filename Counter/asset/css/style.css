@@ -18,6 +18,17 @@ i.icon-close.icons{
 .dtp-content.animated.pulse{
   max-width: 340px;
 }
+.navbar{
+  background-color: #000E40 !important;
+}
+.form-signin-wrapper{
+  background: #000E40 !important;
+}
+.form-signin .panel{
+  background: #EA8F08 !important;
+  box-shadow: 0 1px 2px #F79300, 0 1px 2px #F79300 !important;
+}
+
 /*End Radion Custom css*/
 
 body {
@@ -315,7 +326,7 @@ p.quote{
 /*end: product grid*/
 
 /*start: Login*/
- .form-signin-wrapper{background: #2196f3 !important;}
+ /*.form-signin-wrapper{background: #2196f3 !important;}*/
  .form-signin{
          max-width: 330px;
          padding: 15px;

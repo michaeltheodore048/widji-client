@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Radical Print</title>
+	<link rel="stylesheet" type="text/css" href="custom.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="../API/api.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		ANGKASA PUTRA
+		<br><br>
+		ANGKASA PUTRA PRINT DIGITAL<br>
+		Jl Cihamplas No. 77 Bandung<br>
+		Tlp/Fax. 022-4201676<br>
+		<br>
+		PRINT
+		<br>
+		<span class="number"></span>
+		<br>
+		Terima kasih atas kunjungan anda<br>
+
+		<script>
+
+		var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+		var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+		var date = new Date();
+		var day = date.getDate();
+		var month = date.getMonth();
+		var thisDay = date.getDay(),
+		thisDay = myDays[thisDay];
+		var yy = date.getYear();
+		var year = (yy < 1000) ? yy + 1900 : yy;
+		var d = new Date();
+		var curr_hour = d.getHours();
+		var curr_min = d.getMinutes();
+		curr_min = curr_min + "";
+		if (curr_min.length == 1) {
+			curr_min = "0" + curr_min;
+		}
+		document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year + " " + curr_hour + ":" + curr_min);
+		</script>
+
+		<script>
+
+		// Check key is pressed
+		window.addEventListener("keypress", checkKeyPressed, false);
+
+		function checkKeyPressed(e) {
+			if (e.keyCode == "50") {
+				newEntry('c');
+				setTimeout(function(){
+					window.print();
+				},500);
+
+			}else if (e.keyCode == "53") {
+				newEntry('b');
+				setTimeout(function(){
+					window.print();
+				},500);
+			}else if (e.keyCode == "56") {
+				newEntry('a');
+				setTimeout(function(){
+					window.print();
+				},500);
+			}
+		}
+
+		</script>
+
+	</body>
+	</html>

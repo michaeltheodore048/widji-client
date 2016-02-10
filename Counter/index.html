@@ -8,10 +8,10 @@
 	<meta name="description" content="Miminium Admin Template v.1">
 	<meta name="author" content="Isna Nur Azis">
 	<meta name="keyword" content="">
-	<title>RadionTech</title>
+	<title>Radical Counter</title>
 
 	<!-- plugins -->
-	<script type="text/javascript" src="asset/js/api.js"></script>
+	<script type="text/javascript" src="../API/api.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 	<!-- start: Css -->
@@ -37,6 +37,9 @@
 </head>
 
 <body id="mimin" class="dashboard">
+
+	<audio id="nomor" src=""></audio>
+	<audio id="jenis" src=""></audio>
 
 	<!-- start: Header -->
 	<nav class="navbar navbar-default header navbar-fixed-top">
@@ -222,7 +225,7 @@
 
 										<!-- Time Picker -->
 										<div class="form-group form-animate-text">
-											<input type="text" class="form-text time" required="" data-dtp="dtp_tj708">
+											<input type="text" class="form-text mask-time-h-m" required="">
 											<span class="bar"></span>
 											<label><span class="fa fa-clock-o"></span> Diambil Jam:</label>
 										</div>
@@ -439,6 +442,7 @@
 	<script src="asset/js/bootstrap.min.js"></script>
 	<script src="asset/js/plugins/select2.full.min.js"></script>
 	<script src="asset/js/bootstrap-datepicker.js"></script>
+
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
@@ -449,39 +453,26 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		var myIp;
+		refreshAntrian();
+		checkCounter();
+
 		var tingTong = new Audio('asset/sound/TING TONG.mp3');
-		var nomor = new Audio('asset/sound/nomor.mp3');
 		var antrian = new Audio('asset/sound/antrian.mp3');
-		var jenisAntrian = new Audio('asset/sound/a.mp3');
-		var nomorAntrian = new Audio('asset/sound/3.mp3');
-		var dipersilahkan = new Audio('asset/sound/dipersilahkan.mp3');
+		var jenisAntrian = document.getElementById('jenis');
+		var nomorAntrian = document.getElementById('nomor');
 		var ke = new Audio('asset/sound/ke.mp3');
 		var konter = new Audio('asset/sound/konter.mp3');
-		var nomorKonter = new Audio('asset/sound/7.mp3');
-		var terimaKasih = new Audio('asset/sound/terima kasih.mp3');
-
-		refreshAntrian();
-
-		$.get('http://l2.io/ip.js').success(function(data){
-			var temp = data.split("'");
-			myIp = temp[1];
-			checkCounter(myIp);
-		});
 
 		$('#btnA').click(function(){
-			nextCustomer(myIp,"a");
-			refreshAntrian();
+			nextCustomer(localStorage.IP,"a");
 			tingTong.play();
 		});
 		$('#btnB').click(function(){
-			nextCustomer(myIp,"b");
-			refreshAntrian();
+			nextCustomer(localStorage.IP,"b");
 			tingTong.play();
 		});
 		$('#btnC').click(function(){
-			nextCustomer(myIp,"c");
-			refreshAntrian();
+			nextCustomer(localStorage.IP,"c");
 			tingTong.play();
 		});
 		$('#btnRefresh').click(function() {
@@ -489,9 +480,6 @@
 		});
 
 		tingTong.addEventListener('ended',function(){
-			nomor.play();
-		});
-		nomor.addEventListener('ended',function(){
 			antrian.play();
 		});
 		antrian.addEventListener('ended',function(){
@@ -501,9 +489,6 @@
 			nomorAntrian.play();
 		});
 		nomorAntrian.addEventListener('ended',function(){
-			dipersilahkan.play();
-		});
-		dipersilahkan.addEventListener('ended',function(){
 			ke.play();
 		});
 		ke.addEventListener('ended',function(){
@@ -511,9 +496,6 @@
 		});
 		konter.addEventListener('ended',function(){
 			nomorKonter.play();
-		});
-		nomorKonter.addEventListener('ended',function(){
-			terimaKasih.play();
 		});
 
 		$('#addRowButton').click(function() {
@@ -629,6 +611,7 @@
 		$('.mask-phone').mask('0000-0000');
 		$('.mask-phone_with_ddd').mask('(00) 0000-0000');
 		$('.mask-phone_us').mask('(000) 000-0000');
+		$('.mask-time-h-m').mask('00:00');
 		$('.mask-mixed').mask('AAA 000-S0S');
 		$('.mask-cpf').mask('000.000.000-00', {reverse: true});
 		$('.mask-money').mask('000.000.000.000.000,00', {reverse: true});
@@ -715,11 +698,6 @@
 
 	<!-- custom -->
 	<script src="asset/js/main.js"></script>
-	<script type="text/javascript">
-	(function(jQuery){
-
-	})(jQuery);
-	</script>
 	<!-- end: Javascript -->
 </body>
 </html>
