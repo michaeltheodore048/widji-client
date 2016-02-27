@@ -52,9 +52,9 @@
             <label>Counter Number</label>
           </div>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="text" class="form-text" name="operatorName" required>
+            <input type="text" class="form-text" name="username" required>
             <span class="bar"></span>
-            <label>Operator Name</label>
+            <label>Username</label>
           </div>
 
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
@@ -93,7 +93,7 @@ $('.signInButton').click(function(){
   if ($('input[name=counterNumber]').val()=="") {
     alert("Counter Number is Empty");
   } else {
-    login(localStorage.IP);
+    login();
   }
 });
 </script>

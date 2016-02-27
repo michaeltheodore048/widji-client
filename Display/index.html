@@ -5,7 +5,7 @@
   <title>Radical Display</title>
 
   <!-- plugins -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
   <script type="text/javascript" src="assets/js/noty/jquery.noty.js"></script>
   <script type="text/javascript" src="../API/api.js"></script>
   <script type="text/javascript" src="assets/js/bootstrap.min.js">
@@ -25,9 +25,8 @@
         <!-- slideshow -->
       </div>
       <div class="col-md-12 running-text full-width">
-        <marquee id = "running-text" behavior="scroll" direction="left">this is running text this is running text this is running text this is running text
-          this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
-          this is running text this is running text this is running text this is running textthis is running text this is running text this is running text this is running text
+        <marquee behavior="scroll" direction="left">
+          <span id = "running-text"></span>
         </marquee>
       </div>
     </div>
@@ -126,6 +125,8 @@
   <!-- slideshow -->
   <script type="text/javascript">
   $(document).ready(function(){
+    setAndGetText("get");
+
     setInterval(function(){
       display();
     },1000);
@@ -165,6 +166,6 @@
   </script>
 
   <!-- script API  -->
-  <script type="text/javascript" src="assets/js/caller.js"></script>
+  <!-- <script type="text/javascript" src="assets/js/caller.js"></script> -->
 </body>
 </html>

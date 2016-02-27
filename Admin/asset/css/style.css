@@ -4,12 +4,23 @@
 
 /*Radion custom css*/
 
+.form-signin-wrapper{
+  background: #000E40 !important;
+}
+.form-signin .panel{
+  background: #EA8F08 !important;
+  box-shadow: 0 1px 2px #F79300, 0 1px 2px #F79300 !important;
+}
 .navbar{
   background-color: #000E40 !important;
 }
 .opener-left-menu{
   background-color: #000E40 !important;
 }
+.padding-top-7{
+  padding-top: 7px;
+}
+
 /*end Radion custom css*/
 
 body {
@@ -307,7 +318,7 @@ p.quote{
 /*end: product grid*/
 
 /*start: Login*/
- .form-signin-wrapper{background: #2196f3 !important;}
+ .form-signin-wrapper{background: #2196f3;}
  .form-signin{
          max-width: 330px;
          padding: 15px;
@@ -315,7 +326,7 @@ p.quote{
     }
     .form-signin a{color: #fff !important;font-weight: bold;}
     .form-signin .btn{margin-top: 30px;}
-    .form-signin .form-group{margin-bottom: 20px !important;}
+    /*.form-signin .form-group{margin-bottom: 20px !important;}*/
     .form-signin .panel{background: #2196f3;color: #fff;padding: 10px;border:none !important;box-shadow: 0 7px 16px #0a86e9, 0 4px 5px #0a86e9;}
     .form-signin .panel-body{padding-bottom: 50px;padding-top: 30px;}
     .form-signin .atomic-number{font-size: 20px;}

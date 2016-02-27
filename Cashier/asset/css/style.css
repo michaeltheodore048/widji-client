@@ -4,6 +4,14 @@
 
 /*Radion Custom css*/
 
+#tablePesanan input{
+  width: 50px;
+}
+
+#dpTextBox input{
+  width: inherit;
+}
+
 div#tabsDemo3Content{
   padding: 20px !important;
   text-align: left;

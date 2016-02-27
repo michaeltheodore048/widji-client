@@ -5,7 +5,5 @@ var things2 = '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0NTI0ODM4O
 
 // var test = 0;
 $.get(url+'/driverC'+things2).success(function(data1){
-    // alert(data.message.length);
-    // test = Number(data1.message.length);
     $('.nomorAntri').text(data1.message.length);
 });

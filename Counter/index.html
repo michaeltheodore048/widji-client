@@ -12,6 +12,7 @@
 
 	<!-- plugins -->
 	<script type="text/javascript" src="../API/api.js"></script>
+	<script src="dist/sweetalert-dev.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 	<!-- start: Css -->
@@ -26,6 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/bootstrap-material-datetimepicker.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/datepicker.css"/>
 	<link href="asset/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="asset/img/logomi.png">
@@ -68,61 +70,64 @@
 				<div class="col-md-12 padding-0">
 
 					<!-- start left box -->
-					<div class="col-md-7 padding-0">
+					<div class="col-md-6 padding-0">
 						<div class="col-md-12 padding-0">
 							<div class="panel box">
 								<div class="panel-body">
 									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-										<div class="panel panel-default">
-											<div class="panel-heading" role="tab" id="headingOne">
-												<h4 class="panel-title">
-													<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="">
-														<h4>Black & White</h4>
-													</a>
-												</h4>
-											</div>
-											<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
-												<div class="panel-body">
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 1
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 2
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 3
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 4
+
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingOne">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="">
+															<h4>Black & White</h4>
+														</a>
+													</h4>
+												</div>
+												<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
+													<div class="panel-body">
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 1
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 2
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 3
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 4
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="panel panel-default">
-											<div class="panel-heading" role="tab" id="headingTwo">
-												<h4 class="panel-title">
-													<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-														<h4>Full Colour</h4>
-													</a>
-												</h4>
-											</div>
-											<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">
-												<div class="panel-body">
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 1
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 2
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 3
-													</div>
-													<div class="col-md-6">
-														<input type="radio" name="option"> Option 4
+
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingTwo">
+													<h4 class="panel-title">
+														<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+															<h4>Full Colour</h4>
+														</a>
+													</h4>
+												</div>
+												<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">
+													<div class="panel-body">
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 1
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 2
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 3
+														</div>
+														<div class="col-md-6">
+															<input type="radio" name="option"> Option 4
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
+
 										<div class="panel panel-default">
 											<div class="panel-heading" role="tab" id="headingThree">
 												<h4 class="panel-title">
@@ -258,14 +263,17 @@
 					<!-- end left box -->
 
 					<!-- start right box -->
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<div class="col-md-12 padding-0">
 							<div class="panel box-v4">
 								<div class="panel-body" style="padding-top:30px;">
 									<div class="form-group">
 										<label class="col-sm-2 control-label text-right padding-7">No. Bon</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" disabled="">
+										<div class="col-sm-8">
+											<input type="text" class="form-control">
+										</div>
+										<div class="col-sm-2">
+											<input type="button" class="btn btn-outline btn-danger" value="Delete Bon" id="deleteBtn">
 										</div>
 									</div>
 									<br><br>
@@ -295,6 +303,53 @@
 						</div>
 
 						<div class="col-md-12 padding-0">
+							<div class="panel box-v4">
+								<div class="panel-heading">
+									<h4>Detail Pesanan</h4>
+								</div>
+								<div class="panel-body" style="padding-top:30px;">
+									<table class="table">
+										<thead>
+											<th>No.</th>
+											<th>Pesanan</th>
+											<th></th>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>Plain paper A4 Fotocopy</td>
+												<td>
+													<div class="btn-group right" role="group">
+														<button type="button" class="btn btn-default">
+															Edit
+														</button>
+                            <button type="button" class="btn btn-danger">
+                            	Delete
+                            </button>
+                          </div>
+												</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>Plain paper A3 Jilid Binding</td>
+												<td>
+													<div class="btn-group right" role="group">
+														<button type="button" class="btn btn-default">
+															Edit
+														</button>
+                            <button type="button" class="btn btn-danger">
+                            	Delete
+                            </button>
+                          </div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div class="col-md-12 padding-0">
 							<div class="panel">
 								<div class="panel-body">
 									<div class="col-md-12 padding-0">
@@ -306,7 +361,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 
 						<!-- Pilih jenis antrian -->
 						<div class="col-md-12 padding-0">
@@ -407,6 +462,24 @@
 		});
 		$('#btnRefresh').click(function() {
 			refreshAntrian();
+		});
+		$('#deleteBtn').click(function(){
+			swal({
+				title: "Admin must approve!",
+				text: "Enter administrator password:",
+				type: "input",
+				inputType: "password",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top",
+				inputPlaceholder: "Password" },
+				function(inputValue){
+					if (inputValue === false) return false;
+					if (inputValue === "") {
+						swal.showInputError("You need to write something!");
+						return false
+					}
+					swal("Nice!", "You wrote: " + inputValue, "success"); });
 		});
 
 		tingTong.addEventListener('ended',function(){
