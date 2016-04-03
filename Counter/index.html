@@ -51,10 +51,8 @@
 					<b>RADICAL COUNTER</b>
 				</a>
 				<ul class="nav navbar-nav navbar-right user-nav">
-					<li class="user-name"><span>Counter <span class="counterNumber"></span> : </span>Akihiko Avaron</li>
-					<li class="dropdown avatar-dropdown">
-						<img src="asset/img/avatar.jpg" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
-					</li>
+					<li class="user-name"><span>Counter <span class="counterNumber"></span> : </span><span class="username"></span></li>
+					<li style="padding:12px"><button id="logoutBtn" class=" btn btn-circle btn-mn btn-warning" value="primary"><span class="icons icon-power" aria-la></span></button></li>
 				</ul>
 			</div>
 		</div>
@@ -97,6 +95,11 @@
 														</div>
 														<div class="col-md-6">
 															<input type="radio" name="option"> Option 4
+														</div>
+														<div class="form-group col-md-12">
+															<div class="col-md-9"></div>
+															<label class="col-md-1 control-label text-right padding-top-7">Qty: </label>
+															<div class="col-md-2"><input id="qty" type="text" class="form-control"></div>
 														</div>
 													</div>
 												</div>
@@ -268,7 +271,7 @@
 							<div class="panel box-v4">
 								<div class="panel-body" style="padding-top:30px;">
 									<div class="form-group">
-										<label class="col-sm-2 control-label text-right padding-7">No. Bon</label>
+										<label class="col-sm-2 control-label text-right padding-top-7">No. Bon</label>
 										<div class="col-sm-8">
 											<input type="text" class="form-control">
 										</div>
@@ -278,24 +281,25 @@
 									</div>
 									<br><br>
 									<div class="form-group">
-										<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
+										<label class="col-sm-2 control-label text-right padding-top-7">Tanggal</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" name="tanggal-text-box" disabled>
 										</div>
-									</div>
+									</div><br>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
 										<input type="text" class="form-text" required>
 										<span class="bar"></span>
 										<label>Pelanggan</label>
 									</div>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
-										<div class="col-sm-8">
+										<div class="col-sm-9">
 											<input type="text" class="form-text mask-phone_us" required>
 											<span class="bar"></span>
 											<label>Telepon</label>
 										</div>
-										<div class="col-sm-4">
-											<input type="button" class="btn btn-primary" value="Cari nomor telepon">
+										<div class="col-sm-1"></div>
+										<div class="col-sm-2">
+											<input type="button" class="btn btn-primary" value="Save">
 										</div>
 									</div>
 								</div>
@@ -304,10 +308,8 @@
 
 						<div class="col-md-12 padding-0">
 							<div class="panel box-v4">
-								<div class="panel-heading">
-									<h4>Detail Pesanan</h4>
-								</div>
 								<div class="panel-body" style="padding-top:30px;">
+									<h4 style="padding-left: 28px;"><b>Detail Pesanan</b></h4><br>
 									<table class="table">
 										<thead>
 											<th>No.</th>
@@ -349,19 +351,42 @@
 							</div>
 						</div>
 
-						<!-- <div class="col-md-12 padding-0">
+						<!-- start panel pengambilan -->
+						<div class="col-md-12 padding-0">
 							<div class="panel">
 								<div class="panel-body">
-									<div class="col-md-12 padding-0">
+									<div class="col-md-6 padding-0">
+										<br>
 
-										<div class="col-md-9"></div>
-										<div class="col-md-3">
-											<input type="button" class="btn btn-primary" value="Hapus Detil">
+										<!-- Date Picker -->
+										<div class="form-group form-animate-text">
+											<input type="text" class="form-text date" required="" data-dtp="dtp_HtEez">
+											<span class="bar"></span>
+											<label><span class="fa fa-calendar"></span> Diambil Tanggal:</label>
 										</div>
+
+										<!-- Time Picker -->
+										<div class="form-group form-animate-text">
+											<input type="text" class="form-text mask-time" required="">
+											<span class="bar"></span>
+											<label><span class="fa fa-clock-o"></span> Diambil Jam:</label>
+										</div>
+
+									</div>
+									<div class="col-md-6">
+										<!-- textarea keterangan -->
+										<b>Keterangan</b><br>
+										<textarea name="keterangan" rows="8" cols="41"></textarea>
+										<br><br>
+										<!-- button -->
+										<input type="button" class="btn btn-primary col-md-5" value="Batal">
+										<div class="col-md-2"></div>
+										<input type="button" class="btn btn-primary col-md-5" value="Simpan">
 									</div>
 								</div>
 							</div>
-						</div> -->
+						</div>
+						<!-- End panel pengambilan -->
 
 						<!-- Pilih jenis antrian -->
 						<div class="col-md-12 padding-0">
@@ -385,11 +410,6 @@
 										<span class="label label-default col-md-2 labelb" style="font-size:20px;">?</span>
 										<div class="col-md-1"></div>
 										<span class="label label-default col-md-2 labelc" style="font-size:20px;">?</span>
-									</div>
-									<!-- exit button -->
-									<div class="col-md-3">
-										<div class="col-md-3"></div>
-										<input type="button" class="btn btn-primary col-md-9" style="margin-top:17px;" value="Exit">
 									</div>
 								</div>
 							</div>
@@ -435,6 +455,10 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		if (localStorage.getItem("session") == "out") {
+			window.location.assign("login.html");
+		}
+
 		refreshAntrian();
 		checkCounter();
 		var date = new Date();
@@ -479,7 +503,11 @@
 						swal.showInputError("You need to write something!");
 						return false
 					}
-					swal("Nice!", "You wrote: " + inputValue, "success"); });
+					swal("Nice!", "You wrote: " + inputValue, "success");
+				});
+		});
+		$('#logoutBtn').click(function(){
+			logout();
 		});
 
 		tingTong.addEventListener('ended',function(){
@@ -578,7 +606,7 @@
 		});
 
 		$('.mask-date').mask('00/00/0000');
-		$('.mask-time').mask('00:00:00');
+		$('.mask-time').mask('00:00');
 		$('.mask-date_time').mask('00/00/0000 00:00:00');
 		$('.mask-cep').mask('00000-000');
 		$('.mask-phone').mask('0000-0000');

@@ -45,6 +45,7 @@ function checkCounter(){
         window.location.assign("login.html");
       }else if (obj.counter != -1) {
         $('.counterNumber').text(obj.counter);
+        $('.username').text(localStorage.getItem('username'));
         $('input[name=counterNumber]').val(obj.counter);
         $('input[name=username]').focus();
       }
@@ -59,9 +60,6 @@ function checkCounter(){
 }
 
 function login(){
-  localStorage.setItem('counterNumber', $('input[name=counterNumber]').val());
-  localStorage.setItem('username', $('input[name=username]').val());
-  localStorage.setItem('password', $('input[name=password]').val());
   $.ajax({
     url: domain + '/login',
     dataType: 'text',
@@ -71,12 +69,15 @@ function login(){
       token:token,
       myIp:localStorage.getItem('IP'),
       counter:localStorage.getItem('counterNumber'),
-      username:localStorage.getItem('username'),
-      password:localStorage.getItem('password')
+      username:$('input[name=username]').val(),
+      password:$('input[name=password]').val()
     },
     success: function(response){
       obj = JSON.parse(response);
       if (obj.message == "success registering ip with counter bro congrats") {
+        localStorage.setItem('session', obj.session);
+        localStorage.setItem('counterNumber', $('input[name=counterNumber]').val());
+        localStorage.setItem('username', $('input[name=username]').val());
         window.location.assign("index.html");
       }else{
         alert(obj.message);
@@ -125,7 +126,7 @@ function nextCustomer(ip,category){
     data: {
       token:token,
       category:category,
-      username:localStorage.getItem('username'),
+      session:localStorage.getItem('session'),
       ipCounter:ip
     },
     success: function(response){
@@ -179,11 +180,14 @@ function setAndGetText(input){
     data: {
       token:token,
       text: input,
-      username: localStorage.getItem('username'),
-      password: localStorage.getItem('password')
+      session: localStorage.getItem('session')
     },
     success: function(response){
       obj = JSON.parse(response);
+      if (input != "get") {
+        swal("Success", "Running Text Has Been Changed", "success");
+      }
+      $('#runningTextBox').val(obj.text);
       $('#running-text').text(obj.text);
     },
     error: function(xhr, status, error){
@@ -194,33 +198,55 @@ function setAndGetText(input){
   });
 }
 
-function drawRow(rowData) {
+function userRow(rowData) {
     var row = $("<tr />")
     var btn = $("<td><button type='button' id='del' class='btn btn-round btn-danger'><span class='fa fa-trash'/></button></td>")
     $("#userTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-    row.append($("<td>" + rowData.id_counter + "</td>"));
-    row.append($("<td>" + rowData.counter_name + "</td>"));
+    row.append($("<td>" + rowData.username + "</td>"));
+    row.append($("<td>" + rowData.role_name + "</td>"));
     row.append(btn);
 }
 
-function drawTable(data) {
+function drawUserTable(data) {
     for (var i = 0; i < data.length; i++) {
-        drawRow(data[i]);
+        userRow(data[i]);
     }
 }
 
-function tes(){
+function deleteUser(src) {
+
+    var table = src.parentNode.parentNode.parentNode;
+    var row = src.parentNode.parentNode;
+    for(var i = table.rows.length; i--; )
+    {
+        if ( table.rows[i] == row )
+        {
+          if (table.rows[i].cells[1].innerHTML == "admin") {
+            alert("cant delete admin");
+          } else{
+            deleteUserCounter(table.rows[i].cells[0].innerHTML);
+            // alert(table.rows[i].cells[0].innerHTML);
+            table.deleteRow(i);
+          }
+        }
+    }
+
+}
+
+function getUsers(){
   $.ajax({
-    url: domain + '/testJson',
+    url: domain + '/getUsers',
     dataType: 'text',
     method: 'POST',
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: {
-      token:token
+      token:token,
+      session:localStorage.getItem('session')
     },
     success: function(response){
+
       obj = JSON.parse(response);
-      drawTable(obj);
+      // drawUserTable(obj);
     },
     error: function(xhr, status, error){
       alert(error);
@@ -241,8 +267,7 @@ function addAccount(){
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: {
       token:token,
-      usernameAdmin:'tes',
-      password:'123',
+      session:localStorage.getItem('session'),
       newUsername:$('#username').val(),
       newPassword:$('#password').val(),
       role:$('#role option:selected').val()
@@ -262,9 +287,6 @@ function addAccount(){
 }
 
 function editAccount(){
-  var usernameAdmin =	localStorage.getItem('username');
-  var passwordAdmin =	localStorage.getItem('password');
-
   $.ajax({
     url: domain + '/editAccount',
     dataType: 'text',
@@ -272,10 +294,9 @@ function editAccount(){
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     data: {
       token:token,
-      usernameLocal:localStorage.getItem('username'),
-      passwordLocal:'123',
-      usernameType:$('#username').val(),
-      passwordType:$('#password').val(),
+      session:localStorage.getItem('session'),
+      usernameAdminType:$('#username').val(),
+      passwordAdminType:$('#password').val(),
       newPassword:$('#newPassword').val(),
       confirmation:$('#confPassword').val()
     },
@@ -291,3 +312,182 @@ function editAccount(){
     }
   });
 }
+
+function logout(){
+  $.ajax({
+    url: domain + '/logout',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      session:localStorage.getItem('session')
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      if (obj.message == "success cuuuy" || obj.message == "success deleting session") {
+        localStorage.setItem('session', "out");
+        window.location.assign("login.html");
+      }else{
+        alert(obj.message);
+      }
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function loginAdmin(){
+  $.ajax({
+    url: domain + '/loginAdmin',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      usernameAdmin:$('input[name=username]').val(),
+      passwordAdmin:$('input[name=password]').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      if (obj.message == "success inserting session" || obj.message == "success updating session") {
+        localStorage.setItem('session', obj.session);
+        localStorage.setItem('username', $('input[name=username]').val());
+        window.location.assign("index.html");
+      }else{
+        alert(obj.message);
+      }
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function deleteUserCounter(input){
+  $.ajax({
+    url: domain + '/deleteUserCounter',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      session:localStorage.getItem('session'),
+      usernameDelete:input
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function addNewMaterial(){
+  $.ajax({
+    url: domain + '/addNewMaterial',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      session:localStorage.getItem('session'),
+      kodeBahan:$('#kodeBahan').val(),
+      namaBahan:$('#namaBahan').val(),
+      unit:$('#unit').val(),
+      ukuranPerUnit:$('#ukuranPerUnit').val(),
+      jumlahStok:$('#jumlahStok').val(),
+      satuan:$('#satuan').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function getMaterials(){
+  $.ajax({
+    url: domain + '/getMaterials',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      // drawMaterialTable(obj);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function addMaterialStock(idMaterial,unitQuantity){
+  $.ajax({
+    url: domain + '/addStock',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      idMaterial:idMaterial,
+      unitQuantity:unitQuantity
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      swal({
+        title: "Done!",
+        text: "Successfully added!",
+        type: "success"
+      },
+      function(){
+        location.reload();
+      });
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+// function materialRow(rowData) {
+//     var row = $("<tr />")
+//     var btn = $("<td><button type='button' id='edit' class='btn btn-round btn-primary'><span class='fa fa-plus'/></button></td>")
+//     $("#materialTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+//     row.append($("<td>" + rowData.material_code + "</td>"));
+//     row.append($("<td>" + rowData.material_name + "</td>"));
+//     row.append($("<td>" + rowData.smallest_unit + "</td>"));
+//     row.append($("<td>" + rowData.stock_per_unit + "</td>"));
+//     row.append($("<td>" + rowData.unit_name + "</td>"));
+//     row.append($("<td>" + rowData.quantity + "</td>"));
+//     if (window.location.pathname == "/C:/xampp/htdocs/widji-client/Storage/index.html") {
+//       row.append(btn);
+//     }
+// }
+//
+// function drawMaterialTable(data) {
+//     for (var i = 0; i < data.length; i++) {
+//         materialRow(data[i]);
+//     }
+// }

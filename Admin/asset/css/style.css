@@ -4,6 +4,10 @@
 
 /*Radion custom css*/
 
+#userTable_length{
+  float: left;
+}
+
 .form-signin-wrapper{
   background: #000E40 !important;
 }
@@ -19,6 +23,9 @@
 }
 .padding-top-7{
   padding-top: 7px;
+}
+.no-pad{
+  padding: 0px;
 }
 
 /*end Radion custom css*/

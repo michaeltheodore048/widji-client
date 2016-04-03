@@ -47,20 +47,19 @@
             <span class="bar"></span>
           </div>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="text" class="form-text" name="operatorName" required>
+            <input type="text" class="form-text" name="username" required>
             <span class="bar"></span>
             <label>Username</label>
           </div>
-
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="password" class="form-text" name="password" required>
+            <input id="password" type="password" class="form-text" name="password" required>
             <span class="bar"></span>
             <label>Password</label>
           </div>
           <!-- <label class="pull-left">
           <input type="checkbox" class="icheck pull-left" name="checkbox1"/> Remember me
         </label> -->
-        <input class="btn col-md-12 signInButton" value="Sign In"/>
+        <input id="loginBtn" class="btn col-md-12" value="Log In"/>
       </div>
   </div>
 </form>
@@ -80,15 +79,11 @@
 <!-- <script src="asset/js/main.js"></script> -->
 <script>
 $(document).ready(function(){
-  checkCounter();
 });
 
-$('.signInButton').click(function(){
-  if ($('input[name=counterNumber]').val()=="") {
-    alert("Counter Number is Empty");
-  } else {
-    login(localStorage.IP);
-  }
+$('#loginBtn').click(function(){
+  loginAdmin();
+  // alert($('input[name=password]').val());
 });
 </script>
 <!-- end: Javascript -->

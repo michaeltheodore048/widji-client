@@ -4,6 +4,10 @@
 
 /*Radion custom css*/
 
+#materialTable_length{
+  float: left;
+}
+
 .navbar{
   background-color: #000E40 !important;
 }
