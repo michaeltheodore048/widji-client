@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/animate.min.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/fullcalendar.min.css"/>
 	<link href="asset/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="asset/img/logomi.png">
@@ -145,11 +146,11 @@
 					<div class="panel box-v1">
 						<div class="panel-heading bg-white border-none">
 							<div class="col-md-6 col-sm-6 col-xs-6 text-left padding-0">
-								<h2 class="text-left">Add New Product</h1>
+								<h2 class="text-left">New Material Details</h1>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-6 text-right">
 									<h2>
-										<span class="fa fa-file text-right"></span>
+										<span class="fa fa-cube text-right"></span>
 									</h2>
 								</div>
 								<div class="col-md-12">
@@ -158,65 +159,31 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-md-12">
-									<center><h4>New Product Detail</h4></center>
+									<center><h4>New Material Details</h4></center>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Category</label>
-										<div class="col-md-5">
-											<select class="form-control" id="category">
-												<option value="1">Black & White</option>
-												<option value="2">Full Colour</option>
-												<option value="3">Outdoor</option>
-												<option value="4">Jilid Binding</option>
-												<option value="5">Fotocopy</option>
-												<option value="6">Lainnya</option>
-												<option value="7">Item Tambahan</option>
-											</select>
-										</div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Material Code</label>
+										<div class="col-sm-9"><input id="kodeBahan" type="text" class="form-control"></div>
 									</div>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Media</label>
-										<div class="col-sm-9"><input id="media" type="text" class="form-control"></div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Material Name</label>
+										<div class="col-sm-9"><input id="namaBahan" type="text" class="form-control"></div>
 									</div>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Size</label>
-										<div class="col-sm-9"><input id="size" type="text" class="form-control"></div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Unit Name</label>
+										<div class="col-sm-9"><input id="unit" type="text" class="form-control"></div>
 									</div>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Weight</label>
-										<div class="col-sm-9"><input id="weight" type="text" class="form-control"></div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Stock per Unit</label>
+										<div class="col-sm-9"><input id="ukuranPerUnit" type="number" class="form-control"></div>
 									</div>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Image</label>
-										<div class="col-sm-9"><input id="img" type="text" class="form-control"></div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Quantity</label>
+										<div class="col-sm-9"><input id="jumlahStok" placeholder="Initial quantity in smallest unit.." type="number" class="form-control"></div>
 									</div>
 									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Price</label>
-										<div class="col-sm-9"><input id="price" type="text" class="form-control"></div>
+										<label class="col-sm-3 control-label text-right padding-top-7">Smallest Unit</label>
+										<div class="col-sm-9"><input id="satuan" type="text" class="form-control"></div>
 									</div>
-									<hr>
-									<center><h4>Bahan</h4></center>
-									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Komposisi</label>
-										<div class="col-sm-5">
-											<select class="form-control">
-												<option>A4</option>
-												<option>Full Colour</option>
-												<option>Outdoor</option>
-												<option>Jilid Binding</option>
-												<option>Fotocopy</option>
-												<option>Lainnya</option>
-												<option>Item Tambahan</option>
-											</select>
-										</div>
-										<div class="col-sm-1 padding-top-7">
-											<p>X</p>
-										</div>
-										<div class="col-sm-1 no-pad"><input id="qty" type="text" class="form-control"></div>
-										<label class="col-sm-2 control-label text-right padding-top-7">lembar</label>
-									</div>
-									<button class="right btn btn-circle btn-outline btn-sm btn-default" value="primary">
-										<span class="fa fa-plus"></span>
-									</button>
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -242,6 +209,7 @@
 <script src="asset/js/plugins/fullcalendar.min.js"></script>
 <script src="asset/js/plugins/jquery.nicescroll.js"></script>
 <script src="asset/js/plugins/chart.min.js"></script>
+<script src="dist/sweetalert-dev.js"></script>
 
 
 <!-- custom -->
@@ -249,7 +217,11 @@
 <script type="text/javascript">
 
 $('#saveBtn').click(function(){
-	addNewProduct();
+	addNewMaterial();
+
+	// alert($('#username').val());
+	// alert($('#password').val());
+	// alert($('#role option:selected').text());
 });
 $('#btnReset').click(function(){
 	$('#successResetAlert').show();

@@ -198,40 +198,39 @@ function setAndGetText(input){
   });
 }
 
-function userRow(rowData) {
-    var row = $("<tr />")
-    var btn = $("<td><button type='button' id='del' class='btn btn-round btn-danger'><span class='fa fa-trash'/></button></td>")
-    $("#userTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-    row.append($("<td>" + rowData.username + "</td>"));
-    row.append($("<td>" + rowData.role_name + "</td>"));
-    row.append(btn);
-}
-
-function drawUserTable(data) {
-    for (var i = 0; i < data.length; i++) {
-        userRow(data[i]);
-    }
-}
-
-function deleteUser(src) {
-
-    var table = src.parentNode.parentNode.parentNode;
-    var row = src.parentNode.parentNode;
-    for(var i = table.rows.length; i--; )
-    {
-        if ( table.rows[i] == row )
-        {
-          if (table.rows[i].cells[1].innerHTML == "admin") {
-            alert("cant delete admin");
-          } else{
-            deleteUserCounter(table.rows[i].cells[0].innerHTML);
-            // alert(table.rows[i].cells[0].innerHTML);
-            table.deleteRow(i);
-          }
-        }
-    }
-
-}
+// function userRow(rowData) {
+//     var row = $("<tr />")
+//     var btn = $("<td><button type='button' id='del' class='btn btn-round btn-danger'><span class='fa fa-trash'/></button></td>")
+//     $("#userTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+//     row.append($("<td>" + rowData.username + "</td>"));
+//     row.append($("<td>" + rowData.role_name + "</td>"));
+//     row.append(btn);
+// }
+//
+// function drawUserTable(data) {
+//     for (var i = 0; i < data.length; i++) {
+//         userRow(data[i]);
+//     }
+// }
+//
+// function deleteUser(src) {
+//
+//     var table = src.parentNode.parentNode.parentNode;
+//     var row = src.parentNode.parentNode;
+//     for(var i = table.rows.length; i--; )
+//     {
+//         if ( table.rows[i] == row )
+//         {
+//           if (table.rows[i].cells[1].innerHTML == "admin") {
+//             alert("cant delete admin");
+//           } else{
+//             deleteUserCounter(table.rows[i].cells[0].innerHTML);
+//             // alert(table.rows[i].cells[0].innerHTML);
+//             table.deleteRow(i);
+//           }
+//         }
+//     }
+// }
 
 function getUsers(){
   $.ajax({
@@ -491,3 +490,212 @@ function addMaterialStock(idMaterial,unitQuantity){
 //         materialRow(data[i]);
 //     }
 // }
+
+function addNewProduct(){
+  $.ajax({
+    url: domain + '/addNewProduct',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      idCategory:$('#category').val(),
+      media:$('#media').val(),
+      size:$('#size').val(),
+      weight:$('#weight').val(),
+      imgbase64:$('#img').val(),
+      sessionCode:localStorage.getItem('session'),
+      price:$('#price').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message)
+      // swal({
+      //   title: "Done!",
+      //   text: "Successfully added!",
+      //   type: "success"
+      // },
+      // function(){
+      //   location.reload();
+      // });
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function createOrder(){
+  $.ajax({
+    url: domain + '/createOrder',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode:localStorage.getItem('session'),
+      name:$('#namaPelanggan').val(),
+      phone:$('#telpPelanggan').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      $('#bonTextBox').val(obj.no_bon);
+      // document.getElementById('bonTextBox').disabled = true;
+      // alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function createCustomerNonMember(){
+  $.ajax({
+    url: domain + '/createCustomerNonMember',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode:localStorage.getItem('session'),
+      name:$('#namaPelanggan').val(),
+      phone:$('#telpPelanggan').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function getAvailableProducts(idCategory, panelId){
+  $.ajax({
+    url: domain + '/getAvailableProducts',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      idCategory:idCategory
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      // alert(obj);
+      fillThePanel(panelId,obj);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function makeRadioButton(name, value) {
+
+  var label = document.createElement("label");
+  var radio = document.createElement("input");
+  var text = name;
+  radio.type = "radio";
+  radio.name = "product";
+  radio.value = value;
+  label.appendChild(radio);
+
+  var div = document.createElement('div');
+  div.className = "col-md-6";
+
+  label.appendChild(document.createTextNode(text));
+  div.appendChild(label)
+  return div;
+
+}
+
+function fillThePanel(panelId,obj){
+  var panel = document.getElementById(panelId);
+
+  for (var i = 0; i < obj.length; i++) {
+    var radioButton = makeRadioButton(obj[i].media + "-" + obj[i].size,obj[i].id);
+    panel.appendChild(radioButton);
+  }
+}
+
+function addOrderItem(idProduct, quantity){
+  $.ajax({
+    url: domain + '/addOrderItem',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode:localStorage.getItem('session'),
+      no_bon:$('#bonTextBox').val(),
+      idProduct:idProduct,
+      quantity:quantity
+
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function setOrderInfo(idProduct, quantity){
+  $.ajax({
+    url: domain + '/setOrderInfo',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode:localStorage.getItem('session'),
+      no_bon:$('#bonTextBox').val(),
+      tanggalPengambilan:$('#date').val(),
+      jamPengambilan:$('#time').val(),
+      keterangan:$('#info').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      alert(obj.message);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function getCustomers(idProduct, quantity){
+  $.ajax({
+    url: domain + '/getCustomers',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}

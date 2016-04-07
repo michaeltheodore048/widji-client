@@ -65,7 +65,7 @@ var TableEditable = function () {
             oTable.fnDraw();
         }
 
-        var table = $('#materialTable');
+        var table = $("#fullColorTable");
 
         var obj;
         var oTable = table.dataTable({
@@ -103,26 +103,29 @@ var TableEditable = function () {
             ], // set first column as a default sort by asc
 
              "ajax": { // define ajax settings
-               "url": "http://localhost:3030/radAPIeon/getMaterials", // ajax URL
+               "url": "http://localhost:3030/radAPIeon/getAllProductsByCategory", // ajax URL
                "type": "POST", // request type
                "timeout": 20000,
                "data": function(data) { // add request parameters before submit
-                   data.token = token;
+                   data.token = token,
+                   data.idCategory = 2;
                },
                "dataSrc": function (json) {
                 return json;
                }
              },
             "columns": [
-              {data: 'material_code'},
-              {data: 'material_name'},
-              {data: 'smallest_unit'},
-              {data: 'stock_per_unit'},
-              {data: 'unit_name'},
-              {data: 'quantity'},
+              {data: 'id'},
+              {data: 'name'},
+              {data: 'media'},
+              {data: 'size'},
+              {data: 'status'},
+              {data: 'weight'},
+              {data: 'imgbase64'},
+              {data: 'price'},
               {
                 data: null,
-                defaultContent: '<a class="Add" href="#">Add</a>',
+                defaultContent: '<a class="change" href="#">Change</a>',
                 orderable: false
               }
             ]
@@ -135,9 +138,9 @@ var TableEditable = function () {
 
         var tableWrapper = $("#sample_editable_1_wrapper");
 
-        tableWrapper.find(".dataTables_length select").select2({
-            showSearchInput: false //hide search box with special css class
-        }); // initialize select2 dropdown
+        // tableWrapper.find(".dataTables_length select").select2({
+        //     showSearchInput: false //hide search box with special css class
+        // }); // initialize select2 dropdown
 
         var nEditing = null;
         var nNew = false;
@@ -168,6 +171,40 @@ var TableEditable = function () {
             // editRow(oTable, nRow);
             nEditing = nRow;
             nNew = true;
+        });
+
+        table.on('click', '.change', function (e) {
+
+            var nRow = $(this).parents('tr')[0];
+
+            var status;
+            if (nRow.cells[4].innerHTML == 0) {
+              status = 1;
+            }else{
+              status = 0;
+            }
+
+            $.ajax({
+              url: 'http://localhost:3030/radAPIeon/changeAvailabilityProduct',
+              dataType: 'text',
+              method: 'POST',
+              contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+              data: {
+                token:token,
+                sessionCode: localStorage.getItem('session'),
+                status:status,
+                idProduct:nRow.cells[0].innerHTML
+              },
+              success: function(response){
+                obj = JSON.parse(response);
+              },
+              error: function(xhr, status, error){
+                alert(error);
+              },
+              complete: function(){
+                window.location.assign('fullColorProducts.html');
+              }
+            });
         });
 
         table.on('click', '.delete', function (e) {

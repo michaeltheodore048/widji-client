@@ -4,7 +4,7 @@
 
 /*Radion custom css*/
 
-#userTable_length{
+#materialTable_length, #userTable_length, #bwTable_length, #fullColorTable_length, #outdoorTable_length, #jbTable_length, #fcTable_length, #otherTable_length, #additionalTable_length{
   float: left;
 }
 
