@@ -68,7 +68,7 @@ function login(){
     data: {
       token:token,
       myIp:localStorage.getItem('IP'),
-      counter:localStorage.getItem('counterNumber'),
+      counter:$('input[name=counterNumber]').val(),
       username:$('input[name=username]').val(),
       password:$('input[name=password]').val()
     },
@@ -198,14 +198,41 @@ function setAndGetText(input){
   });
 }
 
-// function userRow(rowData) {
-//     var row = $("<tr />")
-//     var btn = $("<td><button type='button' id='del' class='btn btn-round btn-danger'><span class='fa fa-trash'/></button></td>")
-//     $("#userTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-//     row.append($("<td>" + rowData.username + "</td>"));
-//     row.append($("<td>" + rowData.role_name + "</td>"));
-//     row.append(btn);
-// }
+function prepareOrderTable(input){
+  var obj = JSON.parse(input);
+
+  for (var i = 0; i < obj.count; i++) {
+    orderRow(obj.content[i]);
+  }
+
+  var row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>DP:</span></td><td><label id='dp'></label></td>"));
+  row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>Discount:</span></td><td><label id='disc'></label></td>"));
+  row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>Total:</span></td><td><label id='total'></label></td>"));
+
+  $('#dp').text(obj.dp);
+  $('#disc').text(obj.disc);
+  $('#total').text(obj.jumlah_bayar);
+  $('#bonTextBox').val(obj.no_bon);
+
+}
+
+function orderRow(rowData) {
+  var row = $("<tr />");
+
+  $("#orderTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+  row.append($("<td>" + rowData.name + "</td>"));
+  row.append($("<td>" + rowData.media + "</td>"));
+  row.append($("<td>" + rowData.size + "</td>"));
+  row.append($("<td>" + rowData.weight + "</td>"));
+  row.append($("<td>" + rowData.quantity + "</td>"));
+  row.append($("<td>" + rowData.price + "</td>"));
+}
 //
 // function drawUserTable(data) {
 //     for (var i = 0; i < data.length; i++) {
@@ -543,7 +570,7 @@ function createOrder(){
       obj = JSON.parse(response);
       $('#bonTextBox').val(obj.no_bon);
       // document.getElementById('bonTextBox').disabled = true;
-      // alert(obj.message);
+      alert(obj.message);
     },
     error: function(xhr, status, error){
       alert(error);
@@ -628,7 +655,7 @@ function fillThePanel(panelId,obj){
   }
 }
 
-function addOrderItem(idProduct, quantity){
+function addOrderItem(idProduct, qtyId){
   $.ajax({
     url: domain + '/addOrderItem',
     dataType: 'text',
@@ -639,12 +666,14 @@ function addOrderItem(idProduct, quantity){
       sessionCode:localStorage.getItem('session'),
       no_bon:$('#bonTextBox').val(),
       idProduct:idProduct,
-      quantity:quantity
+      quantity:$(qtyId).val()
 
     },
     success: function(response){
       obj = JSON.parse(response);
       alert(obj.message);
+      $(qtyId).val("");
+      refreshOrderDetails();
     },
     error: function(xhr, status, error){
       alert(error);
@@ -680,7 +709,7 @@ function setOrderInfo(idProduct, quantity){
   });
 }
 
-function getCustomers(idProduct, quantity){
+function getCustomers(){
   $.ajax({
     url: domain + '/getCustomers',
     dataType: 'text',
@@ -691,6 +720,7 @@ function getCustomers(idProduct, quantity){
     },
     success: function(response){
       obj = JSON.parse(response);
+      return obj;
     },
     error: function(xhr, status, error){
       alert(error);
@@ -699,3 +729,133 @@ function getCustomers(idProduct, quantity){
     }
   });
 }
+
+function checkCashier(){
+  $.ajax({
+    url: domain + '/checkIp',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      myIp:localStorage.getItem('IP')
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      if (obj.counter == -1 && window.location == "file:///C:/xampp/htdocs/widji-client/Cashier/index.html") {
+        window.location.assign("login.html");
+      }else if (obj.counter != -1) {
+        $('.cashierNumber').text(obj.counter);
+        $('.username').text(localStorage.getItem('username'));
+        $('input[name=cashierNumber]').val(obj.counter);
+        $('input[name=username]').focus();
+      }
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function loginCashier(){
+  $.ajax({
+    url: domain + '/login',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      myIp:localStorage.getItem('IP'),
+      counter:$('input[name=cashierNumber]').val(),
+      username:$('input[name=username]').val(),
+      password:$('input[name=password]').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      if (obj.message == "success registering ip with counter bro congrats") {
+        localStorage.setItem('session', obj.session);
+        localStorage.setItem('cashierNumber', $('input[name=cashierNumber]').val());
+        localStorage.setItem('username', $('input[name=username]').val());
+        window.location.assign("index.html");
+      }else{
+        alert(obj.message);
+      }
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function refreshOrderDetails(){
+  $.ajax({
+    url: domain + '/getAllOrderItem',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode:localStorage.getItem('session'),
+      no_bon:$('#bonTextBox').val()
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      drawOrderTable(obj.content);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+}
+
+function drawOrderTable(data) {
+  $("#tableBody").empty();
+    for (var i = 0; i < data.length; i++) {
+        orderRow(data[i]);
+    }
+}
+
+function orderRow(rowData) {
+    var row = $("<tr />")
+    var btn = $("<td><center><input type='button' id='delete' class='btn btn-danger' value='Delete'></center></td>")
+    $("#listPesanan").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+    row.append($("<td>" + rowData.id_order_item + "</td>"));
+    row.append($("<td>" + rowData.name + "-" + rowData.media + " " + rowData.size + "</td>"));
+    row.append($("<td>" + rowData.quantity + "</td>"));
+    row.append(btn);
+}
+
+var tableListPesanan = $("#listPesanan");
+
+tableListPesanan.on('click', '#delete', function (e) {
+  var nRow = $(this).parents('tr')[0];
+
+  $.ajax({
+    url: domain + '/deleteItemOrder',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      sessionCode: localStorage.getItem('session'),
+      no_bon:$('#bonTextBox').val(),
+      idOrderItem:nRow.cells[0].innerHTML
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      nRow.remove();
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+
+});

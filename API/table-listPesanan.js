@@ -17,7 +17,7 @@ var TableEditable = function () {
             jqTds[3].innerHTML = aData.stock_per_unit;
             jqTds[4].innerHTML = aData.unit_name;
             jqTds[5].innerHTML = aData.quantity;
-            jqTds[6].innerHTML = '<a class="add" href="">add</a>';
+            jqTds[6].innerHTML = '<a class="add" href="javascript:;">Add</a>';
 
         }
 
@@ -65,7 +65,7 @@ var TableEditable = function () {
             oTable.fnDraw();
         }
 
-        var table = $('#userTable');
+        var table = $("#listPesanan");
 
         var obj;
         var oTable = table.dataTable({
@@ -103,23 +103,30 @@ var TableEditable = function () {
             ], // set first column as a default sort by asc
 
              "ajax": { // define ajax settings
-               "url": "http://localhost:3030/radAPIeon/getUsers", // ajax URL
+               "url": "http://localhost:3030/radAPIeon/getAllOrderItem", // ajax URL
                "type": "POST", // request type
                "timeout": 20000,
                "data": function(data) { // add request parameters before submit
                    data.token = token,
-                   data.sessionCode = localStorage.getItem('session');
+                   data.sessionCode = localStorage.getItem('session'),
+                   data.no_bon = $('#bonTextBox').val();
                },
                "dataSrc": function (json) {
                 return json;
                }
              },
             "columns": [
-              {data: 'username'},
-              {data: 'role_name'},
+              {data: 'id'},
+              {data: 'name'},
+              {data: 'media'},
+              {data: 'size'},
+              {data: 'status'},
+              {data: 'weight'},
+              {data: 'imgbase64'},
+              {data: 'price'},
               {
                 data: null,
-                defaultContent: '<a class="delete" href="#">Delete</a>',
+                defaultContent: '<a class="change" href="#">Change</a>',
                 orderable: false
               }
             ]
@@ -130,8 +137,8 @@ var TableEditable = function () {
             alert(' row(s) were loaded' );
         } );
 
-        // var tableWrapper = $("#sample_editable_1_wrapper");
-        //
+        var tableWrapper = $("#sample_editable_1_wrapper");
+
         // tableWrapper.find(".dataTables_length select").select2({
         //     showSearchInput: false //hide search box with special css class
         // }); // initialize select2 dropdown
@@ -167,37 +174,37 @@ var TableEditable = function () {
             nNew = true;
         });
 
-        table.on('click', '.delete', function (e) {
-
-            if (confirm("Are you sure to delete this row ?") == false) {
-                return;
-            }
+        table.on('click', '.change', function (e) {
 
             var nRow = $(this).parents('tr')[0];
-            // console.log(nRow.cells[2].innerHTML);
 
+            var status;
+            if (nRow.cells[4].innerHTML == 0) {
+              status = 1;
+            }else{
+              status = 0;
+            }
+
+            // console.log(nRow.cells[2].innerHTML);
             $.ajax({
-              url: 'http://localhost:3030/radAPIeon/deleteUserCounter',
+              url: 'http://localhost:3030/radAPIeon/changeAvailabilityProduct',
               dataType: 'text',
               method: 'POST',
               contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
               data: {
                 token:token,
-                session: localStorage.getItem('session'),
-                usernameDelete:nRow.cells[0].innerHTML,
+                sessionCode: localStorage.getItem('session'),
+                status:status,
+                idProduct:nRow.cells[0].innerHTML
               },
               success: function(response){
                 obj = JSON.parse(response);
-                alert(obj.message);
-                if (obj.message !== "err.. you can't delete an admin account") {
-                  oTable.fnDeleteRow(nRow);
-                }
-                  // window.location.assign('table_editable');
               },
               error: function(xhr, status, error){
                 alert(error);
               },
               complete: function(){
+                window.location.assign('additionalProducts.html');
               }
             });
         });
@@ -268,71 +275,69 @@ var TableEditable = function () {
 
         });
 
-        table.on('click', '.add', function (e) {
+        table.on('click', '.edit', function (e) {
             e.preventDefault();
 
             /* Get the row as a parent of the link that was clicked on */
             var nRow = $(this).parents('tr')[0];
             var jqTds = $('input', nRow);
 
-            alert("hehe");
-
-            // if (nEditing !== null && nEditing != nRow) {
-            //     /* Currently editing - but not this row - restore the old before continuing to edit mode */
-            //     restoreRow(oTable, nEditing);
-            //     editRow(oTable, nRow);
-            //     nEditing = nRow;
-            // } else if (nEditing == nRow || this.innerHTML == "Save") {
-            //     /* Editing this row and want to save it */
-            //     // alert("Updated! Do not forget to do some ajax to sync with backend :)");
-            //     $.ajax({
-            //        url:'https://188.166.247.55:8080/handshake',
-            //        dataType: 'text',
-            //        method: 'POST',
-            //        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            //        success: function(response){
-            //          obj = JSON.parse(response);
-            //          $.ajax({
-            //           url: 'https://188.166.247.55:8080/addEmployee',
-            //           dataType: 'text',
-            //           method: 'POST',
-            //           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            //           data: {
-            //             session: localStorage.getItem('session'),
-            //             nfcid:jqTds[2].value,
-            //             name:jqTds[1].value,
-            //             _id:jqTds[0].value,
-            //             token:obj.token
-            //           },
-            //           success: function(response){
-            //             obj = JSON.parse(response);
-            //             if (obj.message == 'nfcid has been used') {
-            //               alert('nfcid has been used');
-            //             }
-            //             console.log(obj.message);
-            //           },
-            //           error: function(xhr, status, error){
-            //             alert(error);
-            //           },
-            //           complete: function(){
-            //             window.location.assign('table_editable');
-            //           }
-            //         });
-            //        },
-            //        error: function(xhr, status, error){
-            //          alert(error);
-            //        },
-            //        complete: function(){
-            //           //  window.location.assign('table_editable');
-            //        }
-            //      });
-            //     saveRow(oTable, nEditing);
-            //     nEditing = null;
-            // } else {
-            //     /* No edit in progress - let's start one */
-            //     editRow(oTable, nRow);
-            //     nEditing = nRow;
-            // }
+            if (nEditing !== null && nEditing != nRow) {
+                /* Currently editing - but not this row - restore the old before continuing to edit mode */
+                restoreRow(oTable, nEditing);
+                editRow(oTable, nRow);
+                nEditing = nRow;
+            } else if (nEditing == nRow || this.innerHTML == "Save") {
+                /* Editing this row and want to save it */
+                // alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                $.ajax({
+                   url:'https://188.166.247.55:8080/handshake',
+                   dataType: 'text',
+                   method: 'POST',
+                   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                   success: function(response){
+                     obj = JSON.parse(response);
+                     $.ajax({
+                      url: 'https://188.166.247.55:8080/addEmployee',
+                      dataType: 'text',
+                      method: 'POST',
+                      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                      data: {
+                        session: localStorage.getItem('session'),
+                        nfcid:jqTds[2].value,
+                        name:jqTds[1].value,
+                        _id:jqTds[0].value,
+                        token:obj.token
+                      },
+                      success: function(response){
+                        obj = JSON.parse(response);
+                        if (obj.message == 'nfcid has been used') {
+                          alert('nfcid has been used');
+                        }
+                        console.log(obj.message);
+                      },
+                      error: function(xhr, status, error){
+                        alert(error);
+                      },
+                      complete: function(){
+                        window.location.assign('table_editable');
+                      }
+                    });
+                   },
+                   error: function(xhr, status, error){
+                     alert(error);
+                   },
+                   complete: function(){
+                      //  window.location.assign('table_editable');
+                   }
+                 });
+                saveRow(oTable, nEditing);
+                nEditing = null;
+            } else {
+                /* No edit in progress - let's start one */
+                editRow(oTable, nRow);
+                nEditing = nRow;
+            }
         });
     }
 

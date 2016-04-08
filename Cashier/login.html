@@ -47,16 +47,15 @@
             <span class="bar"></span>
           </div>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="number" class="form-text" name="counterNumber" required>
+            <input type="number" class="form-text" name="cashierNumber" required>
             <span class="bar"></span>
-            <label>Counter Number</label>
+            <label>Cashier Number</label>
           </div>
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
-            <input type="text" class="form-text" name="operatorName" required>
+            <input type="text" class="form-text" name="username" required>
             <span class="bar"></span>
-            <label>Operator Name</label>
+            <label>Username</label>
           </div>
-
           <div class="form-group form-animate-text" style="margin-top:40px !important;">
             <input type="password" class="form-text" name="password" required>
             <span class="bar"></span>
@@ -85,15 +84,15 @@
 <!-- <script src="asset/js/main.js"></script> -->
 <script>
 $(document).ready(function(){
-  checkCounter();
-  $('input[name=counterNumber]').focus();
+  checkCashier();
+  $('input[name=cashierNumber]').focus();
 });
 
 $('.signInButton').click(function(){
-  if ($('input[name=counterNumber]').val()=="") {
-    alert("Counter Number is Empty");
+  if ($('input[name=cashierNumber]').val()=="") {
+    alert("Cashier Number is Empty");
   } else {
-    login(localStorage.IP);
+    loginCashier();
   }
 });
 </script>

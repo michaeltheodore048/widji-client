@@ -27,7 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="asset/css/datepicker.css"/>
 	<link rel="stylesheet" type="text/css" media="all" href="asset/css/autocompletestyle.css">
 	<link rel="stylesheet" type="text/css" href="asset/css/style.css">
-	<link rel="stylesheet" type="text/css" href="asset/css/plugins/datatables.bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="asset/img/logomi.png">
@@ -50,10 +50,6 @@
 				<a href="index.html" class="navbar-brand">
 					<b>RADICAL CASHIER</b>
 				</a>
-				<ul class="nav navbar-nav navbar-right user-nav">
-					<li class="user-name"><span>Cashier <span class="cashierNumber"></span> : </span><span class="username"></span></li>
-					<li style="padding:12px"><button id="logoutBtn" class=" btn btn-circle btn-mn btn-warning" value="primary"><span class="icons icon-power" aria-la></span></button></li>
-				</ul>
 			</div>
 		</div>
 	</nav>
@@ -66,39 +62,73 @@
 
 			<div class="col-md-12" style="padding:20px;">
 				<div class="col-md-12 padding-0">
-					<div class="col-md-8 padding-0">
+					<div class="col-md-7 padding-0">
 						<div class="col-md-12 padding-0">
 							<div class="panel box-v4">
 								<div class="panel-body">
-									<table  id="listBon" class="table table-striped table-bordered" width="100%" cellspacing="0" role="grid">
+									<table  id="tablePesanan" class="table" cellpadding="3">
+										<!-- <col width="1">
+										<col width="200">
+										<col width="80">
+										<col width="80">
+										<col width="1">
+										<col width="90"> -->
 										<thead>
 											<tr>
-												<th >No.Bon</th>
-												<th >Nama</th>
-												<th >Jumlah</th>
-												<th >View</th>
+												<th >Name</th>
+												<th >Media</th>
+												<th >Size</th>
+												<th >Weight</th>
+												<th >Qty</th>
+												<th >Price</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="orderTable">
+
 										</tbody>
 									</table>
-									<input type="button" class="btn btn-primary right" value="Print">
+									<input type="button" class="btn btn-primary right" id="btnBayar" value="Bayar">
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<div class="col-md-12 padding-0">
 
-							<!-- Panel member -->
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<h4 class="panel-title">Member</h4><br>
-
-									<div class="col-sm-3"></div>
-									<a href="generateBarcode.html"><input type="button col-sm-4 right" class="btn btn-primary" value="Generate Barcode"></a>
+							<!-- Panel bon & pelanggan -->
+							<div class="panel box-v4">
+								<div class="panel-body" style="padding-top:30px;">
+									<div class="form-group">
+										<label class="col-sm-2 control-label text-right padding-7">No. Bon</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="bonTextBox">
+										</div>
+									</div>
+									<br><br>
+									<div class="form-group">
+										<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" disabled="">
+										</div>
+									</div>
+									<div class="form-group form-animate-text" style="margin-top:40px !important;">
+										<input type="text" class="form-text biginput" id="pelanggan" required>
+										<span class="bar"></span>
+										<label>Pelanggan</label>
+									</div>
+									<div class="form-group form-animate-text" style="margin-top:40px !important;">
+										<div class="col-sm-8">
+											<input type="text" class="form-text mask-phone_us telepon" required>
+											<span class="bar"></span>
+											<label>Telepon</label>
+										</div>
+										<div class="col-sm-4">
+											<input type="button" class="btn btn-primary" value="Cari nomor telepon">
+										</div>
+									</div>
 								</div>
 							</div>
+							<!-- End panel bon & pelanggan -->
 
 						</div>
 					</div>
@@ -130,9 +160,7 @@
 	<script src="asset/js/plugins/select2.full.min.js"></script>
 	<script src="asset/js/bootstrap-datepicker.js"></script>
 	<script src="asset/js/jquery.autocomplete.min.js"></script>
-	<script src="asset/js/plugins/jquery.datatables.min.js"></script>
-	<script src="asset/js/plugins/datatables.bootstrap.min.js"></script>
-	<script src="../API/table-allOrder.js"></script>
+  <script src="dist/sweetalert-dev.js"></script>
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -144,59 +172,49 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		if (localStorage.getItem("session") == "out") {
-			window.location.assign("login.html");
-		}
-		checkCashier();
-	TableEditable.init();
 
-	$('#logoutBtn').click(function(){
-		logout();
-	});
+    prepareOrderTable(localStorage.getItem('objBon'));
 
-		// var countries = [
-		// 	{ value: 'Andorra', data: '123' },
-		// 	{ value: 'Zimbabwe', data: '234' }
-		// ];
-		//
-		// 	// setup autocomplete function pulling from currencies[] array
-		// 	$('#pelanggan').autocomplete({
-		// 		lookup: countries,
-		// 		onSelect: function (suggestion) {
-		// 			// $('.pelanggan').val(suggestion.value);
-		// 			$('.telepon').val(suggestion.data);
-		// 			// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-		// 		}
-		// 	});
+    $('#btnBayar').click(function(){
+      swal({
+        title: "Membership Check",
+        text: "Scan the barcode:",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top"},
+        function(inputValue){
+          if (inputValue === false) return false;
+          if (inputValue === "") {
+            swal({
+              title: "Bayar",
+              text: "Masukkan nominal yang dibayarkan:",
+              type: "input",
+              showCancelButton: true,
+              closeOnConfirm: false,
+              animation: "slide-from-top"},
+              function(inputValue){
+                if (inputValue === false) return false;
+                if (inputValue === "") {
+                  swal.showInputError("You need to write something!");
+                  return false
+                }
+                $('#dp').text(inputValue);
+                swal("Nice!", "Transaksi berhasil", "success"); });
+          }});
+        });
 
-	// 	var customers = [
-  //   {
-  //     "id": 1,
-  //     "name": "jojon",
-  //     "phone": "0856",
-  //     "email": null,
-  //     "membership_id": null,
-  //     "birthdate": null
-  //   },
-  //   {
-  //     "id": 2,
-  //     "name": "Meke",
-  //     "phone": "123",
-  //     "email": null,
-  //     "membership_id": null,
-  //     "birthdate": null
-  //   }
-  // ];
-
-		// var customers = getCustomers();
-
+		var countries = [
+			{ value: 'Andorra', data: 'AD' },
+			{ value: 'Zimbabwe', data: 'ZZ' }
+		];
 
 			// setup autocomplete function pulling from currencies[] array
 			$('#pelanggan').autocomplete({
-				lookup: customers,
+				lookup: countries,
 				onSelect: function (suggestion) {
 					// $('.pelanggan').val(suggestion.value);
-					$('.telepon').val(suggestion.phone);
+					$('.telepon').val(suggestion.data);
 					// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
 				}
 			});

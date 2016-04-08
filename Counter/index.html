@@ -11,7 +11,6 @@
 	<title>Radical Counter</title>
 
 	<!-- plugins -->
-	<script type="text/javascript" src="../API/api.js"></script>
 	<script src="dist/sweetalert-dev.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
@@ -28,6 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="asset/css/datepicker.css"/>
 	<link href="asset/css/style.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/autocompletestyle.css"/>
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="asset/img/logomi.png">
@@ -267,7 +267,7 @@
 										<label>Pelanggan</label>
 									</div>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
-										<div class="col-sm-9">
+										<div class="col-sm-8">
 											 <input type="text" class="form-text mask-phone_us" id="telpPelanggan" required>
 											<span class="bar"></span>
 											<label>Telepon</label>
@@ -284,41 +284,14 @@
 							<div class="panel box-v4">
 								<div class="panel-body" style="padding-top:30px;">
 									<h4 style="padding-left: 28px;"><b>Detail Pesanan</b></h4><br>
-									<table class="table">
+									<table id="listPesanan" class="table table-striped table-bordered" width="100%" cellspacing="0" role="grid">
 										<thead>
-											<th>No.</th>
+											<th>Id</th>
 											<th>Pesanan</th>
-											<th></th>
+											<th>Qty</th>
+											<th><center>Action</center></th>
 										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Plain paper A4 Fotocopy</td>
-												<td>
-													<div class="btn-group right" role="group">
-														<button type="button" class="btn btn-default">
-															Edit
-														</button>
-                            <button type="button" class="btn btn-danger">
-                            	Delete
-                            </button>
-                          </div>
-												</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Plain paper A3 Jilid Binding</td>
-												<td>
-													<div class="btn-group right" role="group">
-														<button type="button" class="btn btn-default">
-															Edit
-														</button>
-                            <button type="button" class="btn btn-danger">
-                            	Delete
-                            </button>
-                          </div>
-												</td>
-											</tr>
+										<tbody id="tableBody">
 										</tbody>
 									</table>
 								</div>
@@ -350,7 +323,7 @@
 									<div class="col-md-6">
 										<!-- textarea keterangan -->
 										<b>Information</b><br>
-										<textarea id="info" rows="8" cols="41"></textarea>
+										<textarea id="info" rows="8" cols="35"></textarea>
 										<br><br>
 										<!-- button -->
 										<input type="button" id="resetInfo"class="btn btn-primary col-md-5" value="Reset">
@@ -394,6 +367,7 @@
 				</div>
 			</div>
 		</div>
+		<input type='button' id='hapustes' class='btn btn-danger' value='Delete'>
 	</div>
 	<!-- end: content -->
 
@@ -418,6 +392,8 @@
 	<script src="asset/js/bootstrap.min.js"></script>
 	<script src="asset/js/plugins/select2.full.min.js"></script>
 	<script src="asset/js/bootstrap-datepicker.js"></script>
+	<script src="asset/js/jquery.autocomplete.min.js"></script>
+	<script type="text/javascript" src="../API/api.js"></script>
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -456,24 +432,47 @@
 		$('#newOrEdit').click(function(){
 			var bon = $('#bonTextBox').val();
 			if (bon == "") {
-				// alert("New bon");
 				createOrder();
 			}else{
-				alert("edit bon");
+				refreshOrderDetails();
 			}
 		});
 
-		var costumers = 
+		$("#telpPelanggan").autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: "http://localhost:3030/radAPIeon/getCustomers",
+					dataType: "json",
+			    data: {
+			      term: request.term
+			    },
+					success: function(data) {
+						response($.map(data, function(item) {
+							return {
+								label: item.phone,
+								value: item.name
+							};
+						}));
+					}
+				});
+			},
+			minLength: 2,
+			select: function(event, ui) {
+				$('#telpPelanggan').val(ui.item.phone);
+				$('#namaPelanggan').val(ui.item.name);
+			}
+		});
 
-			// setup autocomplete function pulling from currencies[] array
-			$('#pelanggan').autocomplete({
-				lookup: countries,
-				onSelect: function (suggestion) {
-					// $('.pelanggan').val(suggestion.value);
-					$('.telepon').val(suggestion.data);
-					// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				}
-			});
+			// // setup autocomplete function pulling from currencies[] array
+			// $('#telpPelanggan').autocomplete({
+			// 	lookup: $.makeArray(customers),
+			// 	onSelect: function (suggestion) {
+			// 		// $('.pelanggan').val(suggestion.value);
+			// 		$('#namaPelanggan').val(suggestion.name);
+			// 		// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+			// 	}
+			// });
+
 
 		$('#addCust').click(function(){
 			createCustomerNonMember();
@@ -490,38 +489,31 @@
 
 		$('#bwAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#bwPanel').val();
-			var quantity = $('#bwQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#bwQty');
 		});
 		$('#fullColorAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#fullColorPanel').val();
-			var quantity = $('#fullColorQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#fullColorQty');
 		});
 		$('#outdoorAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#outdoorPanel').val();
-			var quantity = $('#outdoorQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#outdoorQty');
 		});
 		$('#jbAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#jbPanel').val();
-			var quantity = $('#jbQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#jbQty');
 		});
 		$('#fcAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#fcPanel').val();
-			var quantity = $('#fcQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#fcQty');
 		});
 		$('#otherAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#otherPanel').val();
-			var quantity = $('#otherQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#otherQty');
 		});
 		$('#additionalAdd').click(function(){
 			var idProduct = $('input[name=product]:checked', '#additionalPanel').val();
-			var quantity = $('#additionalQty').val();
-			addOrderItem(idProduct, quantity);
+			addOrderItem(idProduct, '#additionalQty');
 		});
 
 
