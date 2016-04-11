@@ -113,6 +113,7 @@ var TableEditable = function () {
                    data.sessionCode = localStorage.getItem('session');
                },
                "dataSrc": function (json) {
+                 console.log(json);
                 return json.content;
                }
              },

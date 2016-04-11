@@ -1233,7 +1233,7 @@ function drawBonRow(rowData) {
 
 
 function newWindow(){
-  window.open('bonPrint.html'+urlPath, 'newwindow', 'width=350, height=650');
+  window.open('bonPrint.html'+urlPath, 'newwindow', 'width=450, height=650');
 }
 
 function deleteBon(input){
@@ -1265,4 +1265,8 @@ function deleteBon(input){
    complete: function(){
    }
  });
+}
+
+function newWindowMonitor(){
+  window.open('monitorPrint.html', 'newwindow', 'width=450, height=650');
 }
