@@ -69,6 +69,10 @@
                       </a>
                     </li>
 										<li class="ripple">
+											<a href="customers.html"><span class="fa fa-users"></span> Customers
+											</a>
+										</li>
+										<li class="ripple">
 											<a class="tree-toggle nav-header">
 												<span class="icon-user"></span> Account
 												<span class="fa-angle-right fa right-arrow text-right"></span>
@@ -195,6 +199,32 @@
 												</div>
 											</div>
 
+											<div class="col-md-4">
+												<div class="panel box-v1">
+													<div class="panel-heading bg-white border-none">
+														<div class="col-md-10 col-sm-10 col-xs-10 text-left padding-0">
+															<h4 class="text-left">Edit Discount Membership</h4>
+														</div>
+														<div class="col-md-2 col-sm-2 col-xs-2 text-right">
+															<h4>
+																<span class="icons icon-credit-card text-right"></span>
+															</h4>
+														</div>
+													</div>
+													<div class="panel-body text-center">
+														<div class="col-md-1"></div>
+														<div class="col-md-5 no-pad">
+															<select class="membership"></select>
+														</div>
+														<div class="col-md-3 no-pad">
+															<input type="text" class="form-control" id="disc">
+														</div>
+														<div class="col-md-12" style="margin-top:10px">
+															<input type="button" id="btnSetDisc" class="btn btn-primary col-md-12" value="Set">
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -202,7 +232,6 @@
 						</div>
           <!-- end: content -->
       </div>
-
     <!-- start: Javascript -->
     <script src="asset/js/jquery.min.js"></script>
     <script src="asset/js/jquery.ui.min.js"></script>
@@ -227,6 +256,7 @@
 		 $(document).ready(function(){
 			 TableEditable.init();
 			 setAndGetText("get");
+			 fillMembership()
 
 			 $('#username').text(localStorage.getItem('username'));
 			 if (localStorage.getItem("session") == "out") {
@@ -236,6 +266,9 @@
 		 $(document).on("click", "#del", function(){
 			 deleteUser(this);
 			 //assign location
+		 });
+		 $('#btnSetDisc').click(function(){
+			 editDiscountMembership();
 		 });
 		 $('#setTextBtn').click(function(){
  			 setAndGetText($('#runningTextBox').val());

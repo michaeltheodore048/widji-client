@@ -41,7 +41,7 @@ function checkCounter(){
     },
     success: function(response){
       obj = JSON.parse(response);
-      if (obj.counter == -1 && window.location == "file:///C:/xampp/htdocs/widji-client/Counter/index.html") {
+      if (obj.counter == -1 && window.location == "localhost/widji-client/Counter/index.html") {
         window.location.assign("login.html");
       }else if (obj.counter != -1) {
         $('.counterNumber').text(obj.counter);
@@ -200,9 +200,8 @@ function setAndGetText(input){
 
 function prepareOrderTable(input){
   var obj = JSON.parse(input);
-
   for (var i = 0; i < obj.count; i++) {
-    orderRow(obj.content[i]);
+    drawOrderRow(obj.content[i]);
   }
 
   var row = $("<tr />");
@@ -214,15 +213,31 @@ function prepareOrderTable(input){
   row = $("<tr />");
   $("#orderTable").append(row);
   row.append($("<td colspan='5'><span class='right'>Total:</span></td><td><label id='total'></label></td>"));
+  row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>Uang yang dibayarkan:</span></td><td><label id='paid'></label></td>"));
+  row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>Kembalian:</span></td><td><label id='kembalian'></label></td>"));
+  row = $("<tr />");
+  $("#orderTable").append(row);
+  row.append($("<td colspan='5'><span class='right'>Sisa:</span></td><td><label id='sisa'></label></td>"));
 
   $('#dp').text(obj.dp);
   $('#disc').text(obj.disc);
   $('#total').text(obj.jumlah_bayar);
-  $('#bonTextBox').val(obj.no_bon);
+  if (obj.dp == undefined) {
+    $("#sisa").text();
+  }else{
+    $('#sisa').text(Number(obj.jumlah_bayar-obj.dp));
+  }
+  $('#tgl').val(obj.createdAt.substring(0,10));
+
+  localStorage.setItem('customer_id',obj.customer_id);
 
 }
 
-function orderRow(rowData) {
+function drawOrderRow(rowData) {
   var row = $("<tr />");
 
   $("#orderTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
@@ -233,31 +248,6 @@ function orderRow(rowData) {
   row.append($("<td>" + rowData.quantity + "</td>"));
   row.append($("<td>" + rowData.price + "</td>"));
 }
-//
-// function drawUserTable(data) {
-//     for (var i = 0; i < data.length; i++) {
-//         userRow(data[i]);
-//     }
-// }
-//
-// function deleteUser(src) {
-//
-//     var table = src.parentNode.parentNode.parentNode;
-//     var row = src.parentNode.parentNode;
-//     for(var i = table.rows.length; i--; )
-//     {
-//         if ( table.rows[i] == row )
-//         {
-//           if (table.rows[i].cells[1].innerHTML == "admin") {
-//             alert("cant delete admin");
-//           } else{
-//             deleteUserCounter(table.rows[i].cells[0].innerHTML);
-//             // alert(table.rows[i].cells[0].innerHTML);
-//             table.deleteRow(i);
-//           }
-//         }
-//     }
-// }
 
 function getUsers(){
   $.ajax({
@@ -446,7 +436,7 @@ function addNewMaterial(){
   });
 }
 
-function getMaterials(){
+ function getMaterials(){
   $.ajax({
     url: domain + '/getMaterials',
     dataType: 'text',
@@ -457,7 +447,6 @@ function getMaterials(){
     },
     success: function(response){
       obj = JSON.parse(response);
-      // drawMaterialTable(obj);
     },
     error: function(xhr, status, error){
       alert(error);
@@ -518,7 +507,7 @@ function addMaterialStock(idMaterial,unitQuantity){
 //     }
 // }
 
-function addNewProduct(){
+function addNewProduct(input){
   $.ajax({
     url: domain + '/addNewProduct',
     dataType: 'text',
@@ -530,21 +519,13 @@ function addNewProduct(){
       media:$('#media').val(),
       size:$('#size').val(),
       weight:$('#weight').val(),
-      imgbase64:$('#img').val(),
+      imgbase64:input,
       sessionCode:localStorage.getItem('session'),
       price:$('#price').val()
     },
     success: function(response){
       obj = JSON.parse(response);
       alert(obj.message)
-      // swal({
-      //   title: "Done!",
-      //   text: "Successfully added!",
-      //   type: "success"
-      // },
-      // function(){
-      //   location.reload();
-      // });
     },
     error: function(xhr, status, error){
       alert(error);
@@ -673,7 +654,7 @@ function addOrderItem(idProduct, qtyId){
       obj = JSON.parse(response);
       alert(obj.message);
       $(qtyId).val("");
-      refreshOrderDetails();
+      refreshOrderDetails($('#bonTextBox').val());
     },
     error: function(xhr, status, error){
       alert(error);
@@ -791,7 +772,7 @@ function loginCashier(){
   });
 }
 
-function refreshOrderDetails(){
+function refreshOrderDetails(bon){
   $.ajax({
     url: domain + '/getAllOrderItem',
     dataType: 'text',
@@ -800,11 +781,27 @@ function refreshOrderDetails(){
     data: {
       token:token,
       sessionCode:localStorage.getItem('session'),
-      no_bon:$('#bonTextBox').val()
+      no_bon:bon
     },
     success: function(response){
       obj = JSON.parse(response);
-      drawOrderTable(obj.content);
+      drawOrderTable(obj);
+      console.log(obj);
+
+
+      if (obj.tanggalPengambilan != undefined) {
+        $("#date").val(obj.tanggalPengambilan.substring(0,10));
+      }
+
+      if (obj.createdAt != undefined) {
+        $("#tgl").val(obj.createdAt.substring(0,10));
+      }
+
+      $("#bonTextBox").val(bon);
+      $("#namaPelanggan").val(obj.order_name);
+      $("#telpPelanggan").val(obj.phone);
+      $("#time").val(obj.jamPengambilan);
+      $("#info").val(obj.keterangan);
     },
     error: function(xhr, status, error){
       alert(error);
@@ -816,8 +813,8 @@ function refreshOrderDetails(){
 
 function drawOrderTable(data) {
   $("#tableBody").empty();
-    for (var i = 0; i < data.length; i++) {
-        orderRow(data[i]);
+    for (var i = 0; i < data.count; i++) {
+        orderRow(data.content[i]);
     }
 }
 
@@ -859,3 +856,413 @@ tableListPesanan.on('click', '#delete', function (e) {
   });
 
 });
+
+function fillMatsCombobox(){
+ $.ajax({
+   url: domain + '/getMaterials',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     drawMatsCombobox(obj);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function drawMatsCombobox(mats){
+  var box = $(".materialComboBox");
+  for (var i = 0; i < mats.length; i++) {
+  	box.append("<option value='" + mats[i].id_material + "'>" + mats[i].material_name + "</option>");
+  }
+}
+
+function addProductMaterial(){
+ $.ajax({
+   url: domain + '/addProductMaterial',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     idProduct:localStorage.getItem('currIdProd'),
+     idMaterial:$(".materialComboBox").val(),
+     materialQuantity:$("#qty").val(),
+     sessionCode:localStorage.getItem('session')
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+     window.location.assign("addProductMaterials.html");
+   }
+ });
+}
+
+function getProductDetail(input){
+ $.ajax({
+   url: domain + '/getProductDetail',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     idProduct:input
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     $('#idProduct').text(obj.idProduct);
+     $('#productName').text(obj.productMedia + "-" + obj.productSize);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function getDisc(input){
+ $.ajax({
+   url: domain + '/discountMember',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     sessionCode:localStorage.getItem('session'),
+     no_bon:$("#bonTextBox").val(),
+     membershipCode:input
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     $("#total").text(obj.priceAfterDiscount);
+     $("#disc").text(obj.discount);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+
+var dp = 0,
+disc = 0,
+total = 0,
+paid = 0,
+kembalian = 0,
+sisa = 0,
+info = "-",
+jam = "00:00",
+tgl = "--/--/----"
+function pay(input){
+
+  var temp = input
+  if (Number(input) > Number($('#total').text())) {
+    temp = $('#total').text();
+  }
+
+ $.ajax({
+   url: domain + '/pay',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     sessionCode:localStorage.getItem('session'),
+     no_bon:$("#bonTextBox").val(),
+     jumlahBayar:temp
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     console.log(obj);
+     if (obj.status === "DP") {
+       $("#dp").text(input);
+       $("#sisa").text(Number($("#total").text() - input));
+       dp = input;
+       sisa = Number($("#total").text() - input);
+     }else{
+       $("#sisa").text(sisa);
+       $("#paid").text(input);
+       paid = input;
+     }
+
+     if (Number(input) > Number($("#total").text())) {
+       $("#kembalian").text(Number(input-$("#total").text()));
+       kembalian = Number(input-$("#total").text());
+     }else{
+       $("#kembalian").text("0");
+       kembalian = 0;
+     }
+
+     if ($("#disc").text() != "") {
+       disc = $("#disc").text();
+     }else{
+       $("#disc").text(disc);
+     }
+
+     total = $("#total").text();
+
+     if ($("#info").val() != "") {
+       info = $("#info").val();
+     }
+
+     if ($('#date').val() != "") {
+       tgl = $('#date').val();
+     }
+
+     if ($('#time').val() != "") {
+       jam = $('#time').val();
+     }
+
+     urlPath = "?dp=" + dp + "&paid=" + paid + "&disc=" + disc + "&total=" + total + "&kembalian=" + kembalian + "&sisa=" +
+     sisa + "&nobon=" + $("#bonTextBox").val() + "&info=" + info + "&cust=" + $("#namaPelanggan").val() + "&cashier=" +
+     localStorage.getItem('username') + "&tglambil=" + tgl + "&jamambil=" + jam;
+      },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function registerMember(){
+ $.ajax({
+   url: domain + '/registerMember',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     sessionCode:localStorage.getItem('session'),
+     name:$("#nama").val(),
+     idCustomer:localStorage.getItem('customer_id'),
+     email:$("#email").val(),
+     membership:$("#membership").val(),
+     birthdate:$("#birthdate").val()
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     alert(obj.message);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function fillMembership(){
+ $.ajax({
+   url: domain + '/getAllMemberType',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     drawMembershipCombobox(obj.content);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function drawMembershipCombobox(member){
+  var box = $(".membership");
+  for (var i = 0; i < member.length; i++) {
+  	box.append("<option value='" + member[i].id + "'>" + member[i].name + "</option>");
+  }
+}
+
+function editDiscountMembership(){
+ $.ajax({
+   url: domain + '/editDiscountMembership',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     idMembership:$(".membership").val(),
+     sessionCode:localStorage.getItem('session'),
+     newDiscount:$("#disc").val()
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     alert(obj.message);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function prepareBon(data){
+
+  var date = new Date().toString();
+  var url = window.location.href
+
+  var tglambilUrl = /tglambil=([^&]+)/.exec(url)[1];
+  var tglambil = tglambilUrl ? tglambilUrl : 'myDefaultValue';
+
+  var jamambilUrl = /jamambil=([^&]+)/.exec(url)[1];
+  var jamambil = jamambilUrl ? jamambilUrl : 'myDefaultValue';
+
+  var dpUrl = /dp=([^&]+)/.exec(url)[1];
+  var dp = dpUrl ? dpUrl : 'myDefaultValue';
+
+  var discUrl = /disc=([^&]+)/.exec(url)[1];
+  var disc = discUrl ? discUrl : 'myDefaultValue';
+
+  var totalUrl = /total=([^&]+)/.exec(url)[1];
+  var total = totalUrl ? totalUrl : 'myDefaultValue';
+
+  var paidUrl = /paid=([^&]+)/.exec(url)[1];
+  var paid = paidUrl ? paidUrl : 'myDefaultValue';
+
+  var kembalianUrl = /kembalian=([^&]+)/.exec(url)[1];
+  var kembalian = kembalianUrl ? kembalianUrl : 'myDefaultValue';
+
+  var sisaUrl = /sisa=([^&]+)/.exec(url)[1];
+  var sisa = sisaUrl ? sisaUrl : 'myDefaultValue';
+
+  var nobonUrl = /nobon=([^&]+)/.exec(url)[1];
+  var nobon = nobonUrl ? nobonUrl : 'myDefaultValue';
+
+  var infoUrl = /info=([^&]+)/.exec(url)[1];
+  var info = infoUrl ? infoUrl : 'myDefaultValue';
+
+  var custUrl = /cust=([^&]+)/.exec(url)[1];
+  var cust = custUrl ? custUrl : 'myDefaultValue';
+
+  var cashierUrl = /cashier=([^&]+)/.exec(url)[1];
+  var cashier = cashierUrl ? cashierUrl : 'myDefaultValue';
+
+  var obj = JSON.parse(data);
+  for (var i = 0; i < obj.count; i++) {
+    drawBonRow(obj.content[i]);
+  }
+
+  if (Number(dp) != Number(0)) {
+    var row = $("<tr />");
+    $('#status').text("DP");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>DP:</span></td><td><label id='dp'></label></td>"));
+  }else{
+    $('#status').text("LUNAS");
+  }
+
+  if (Number(disc) != Number(0)) {
+    row = $("<tr />");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>Discount:</span></td><td><label id='disc'></label></td>"));
+  }
+
+  if (Number(total) != Number(0)) {
+    row = $("<tr />");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>Total:</span></td><td><label id='total'></label></td>"));
+  }
+
+  if (Number(paid) != Number(0)) {
+    row = $("<tr />");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>Uang yang dibayarkan:</span></td><td><label id='paid'></label></td>"));
+  }
+
+  if (Number(kembalian) != Number(0)) {
+    row = $("<tr />");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>Kembalian:</span></td><td><label id='kembalian'></label></td>"));
+  }
+
+  if (Number(sisa) != Number(0)) {
+    row = $("<tr />");
+    $("#orderTable").append(row);
+    row.append($("<td colspan='2'><span class='right'>Sisa:</span></td><td><label id='sisa'></label></td>"));
+  }
+
+  $('#dp').text(dp);
+  $('#disc').text(disc);
+  $('#total').text(total);
+  $('#paid').text(paid);
+  $('#kembalian').text(kembalian);
+  $('#sisa').text(sisa);
+  $('#nobon').text(nobon);
+  $('#info').text(unescape(info));
+  $('#cust').text(cust);
+  $('#cashier').text(cashier);
+  $('#operator').text();
+  $('#tglambil').text(tglambil);
+  $('#jamambil').text(jamambil);
+  $('#tgl').text(date.substring(3,16));
+  $('#jam').text(date.substring(16,24));
+
+}
+
+function drawBonRow(rowData) {
+  var row = $("<tr />");
+
+  $("#orderTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+  row.append($("<td>" + rowData.media + "-" + rowData.size + "</td>"));
+  row.append($("<td>" + rowData.quantity + "</td>"));
+  row.append($("<td>" + rowData.price + "</td>"));
+}
+
+
+function newWindow(){
+  window.open('bonPrint.html'+urlPath, 'newwindow', 'width=350, height=650');
+}
+
+function deleteBon(input){
+ $.ajax({
+   url: domain + '/deleteOrder',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:$("#bonTextBox").val(),
+     sessionCode:localStorage.getItem('session'),
+     passAdmin:input
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     console.log(obj);
+     if (obj.message == "err.. no rows on usr while p_a c") {
+       swal.showInputError("Wrong password!");
+       return false
+     }else if (obj.error == "success") {
+        swal("Nice!", "Order has been deleted", "success");
+        location.reload();
+     }
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}

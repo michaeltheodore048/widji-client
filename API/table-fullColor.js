@@ -121,11 +121,21 @@ var TableEditable = function () {
               {data: 'size'},
               {data: 'status'},
               {data: 'weight'},
-              {data: 'imgbase64'},
+              {
+                data: 'imgbase64',
+                "render": function(data, type, row) {
+                  return '<img src="'+data+'" style="width:200px;height:100px;"/>';
+                }
+              },
               {data: 'price'},
               {
                 data: null,
                 defaultContent: '<a class="change" href="#">Change</a>',
+                orderable: false
+              },
+              {
+                data: null,
+                defaultContent: '<a class="view" href="#">View</a>',
                 orderable: false
               }
             ]
@@ -205,6 +215,20 @@ var TableEditable = function () {
                 window.location.assign('fullColorProducts.html');
               }
             });
+        });
+
+        table.on('click', '.view', function (e) {
+            var nRow = $(this).parents('tr')[0];
+
+            localStorage.setItem('currIdProd',nRow.cells[0].innerHTML);
+            window.location.assign("addProductMaterials.html");
+        });
+
+        table.on('click', '.view', function (e) {
+            var nRow = $(this).parents('tr')[0];
+
+            localStorage.setItem('currIdProd',nRow.cells[0].innerHTML);
+            window.location.assign("addProductMaterials.html");
         });
 
         table.on('click', '.delete', function (e) {

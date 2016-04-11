@@ -65,6 +65,8 @@ var TableEditable = function () {
             oTable.fnDraw();
         }
 
+        $.fn.dataTable.ext.errMode = 'none'; //ignore warning
+
         var table = $("#listBon");
 
         var obj;
@@ -187,6 +189,7 @@ var TableEditable = function () {
                 obj = JSON.parse(response);
                 localStorage.setItem('objBon',response);
                 window.location.assign('orderItems.html');
+                // console.log(obj);
               },
               error: function(xhr, status, error){
                 alert(error);

@@ -11,7 +11,6 @@
 	<title>Radical Cashier</title>
 
 	<!-- plugins -->
-	<script type="text/javascript" src="../API/api.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 	<!-- start: Css -->
@@ -88,6 +87,7 @@
 										</tbody>
 									</table>
 									<input type="button" class="btn btn-primary right" id="btnBayar" value="Bayar">
+									<a href="" id="printBtn"> Print</a>
 								</div>
 							</div>
 						</div>
@@ -108,27 +108,70 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" disabled="">
+											<input type="text" id="tgl" class="form-control" disabled="">
 										</div>
 									</div>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
-										<input type="text" class="form-text biginput" id="pelanggan" required>
+										<input type="text" class="form-text biginput" id="namaPelanggan" required>
 										<span class="bar"></span>
 										<label>Pelanggan</label>
 									</div>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
-										<div class="col-sm-8">
-											<input type="text" class="form-text mask-phone_us telepon" required>
-											<span class="bar"></span>
-											<label>Telepon</label>
+										<input type="text" id="telpPelanggan" class="form-text mask-phone_us" required>
+										<span class="bar"></span>
+										<label>Telepon</label>
+									</div>
+								</div>
+							</div>
+						</div>
+							<!-- End panel bon & pelanggan -->
+
+							<!-- start panel pengambilan -->
+							<div class="col-md-12 padding-0">
+								<div class="panel">
+									<div class="panel-body">
+										<div class="col-md-6 padding-0">
+											<br>
+
+											<!-- Date Picker -->
+											<div class="form-group form-animate-text">
+												<input type="text" id="date" class="form-text date" required="" data-dtp="dtp_HtEez">
+												<span class="bar"></span>
+												<label><span class="fa fa-calendar"></span> Diambil Tanggal:</label>
+											</div>
+
+											<!-- Time Picker -->
+											<div class="form-group form-animate-text">
+												<input type="text" id="time" class="form-text mask-time" required="">
+												<span class="bar"></span>
+												<label><span class="fa fa-clock-o"></span> Diambil Jam:</label>
+											</div>
+
 										</div>
-										<div class="col-sm-4">
-											<input type="button" class="btn btn-primary" value="Cari nomor telepon">
+										<div class="col-md-6">
+											<!-- textarea keterangan -->
+											<b>Information</b><br>
+											<textarea id="info" rows="8" cols="27"></textarea>
+											<br><br>
+											<!-- button -->
+											<input type="button" id="resetInfo"class="btn btn-primary col-md-5" value="Reset">
+											<div class="col-md-2"></div>
+											<input type="button" id="saveInfo" class="btn btn-primary col-md-5" value="Save">
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- End panel bon & pelanggan -->
+							<!-- End panel pengambilan -->
+
+							<!-- Panel member -->
+							<div class="panel box-v4">
+								<div class="panel-body">
+									<h4 class="panel-title">Member</h4><br>
+
+									<div class="col-sm-3"></div>
+									<a href="generateBarcode.html"><input type="button col-sm-4 right" class="btn btn-primary" value="Generate Barcode"></a>
+								</div>
+							</div>
 
 						</div>
 					</div>
@@ -161,6 +204,7 @@
 	<script src="asset/js/bootstrap-datepicker.js"></script>
 	<script src="asset/js/jquery.autocomplete.min.js"></script>
   <script src="dist/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../API/api.js"></script>
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -172,52 +216,65 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-
+		var nobon = JSON.parse(localStorage.getItem('objBon'));
+		console.log(nobon);
     prepareOrderTable(localStorage.getItem('objBon'));
+		refreshOrderDetails(nobon.no_bon);
 
-    $('#btnBayar').click(function(){
-      swal({
-        title: "Membership Check",
-        text: "Scan the barcode:",
-        type: "input",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        animation: "slide-from-top"},
-        function(inputValue){
-          if (inputValue === false) return false;
-          if (inputValue === "") {
-            swal({
-              title: "Bayar",
-              text: "Masukkan nominal yang dibayarkan:",
-              type: "input",
-              showCancelButton: true,
-              closeOnConfirm: false,
-              animation: "slide-from-top"},
-              function(inputValue){
-                if (inputValue === false) return false;
-                if (inputValue === "") {
-                  swal.showInputError("You need to write something!");
-                  return false
-                }
-                $('#dp').text(inputValue);
-                swal("Nice!", "Transaksi berhasil", "success"); });
-          }});
-        });
+		$('#printBtn').click(function(){
+			newWindow();
+		});
 
-		var countries = [
-			{ value: 'Andorra', data: 'AD' },
-			{ value: 'Zimbabwe', data: 'ZZ' }
-		];
-
-			// setup autocomplete function pulling from currencies[] array
-			$('#pelanggan').autocomplete({
-				lookup: countries,
-				onSelect: function (suggestion) {
-					// $('.pelanggan').val(suggestion.value);
-					$('.telepon').val(suggestion.data);
-					// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				}
-			});
+		$('#btnBayar').click(function(){
+			swal({
+				title: "Membership Check",
+				text: "Scan the barcode:",
+				type: "input",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top"},
+				function(inputValue){
+					if (inputValue === false) return false;
+					if (inputValue === "") {
+						swal({
+							title: "Bayar",
+							text: "Masukkan nominal yang dibayarkan:",
+							type: "input",
+							showCancelButton: true,
+							closeOnConfirm: false,
+							animation: "slide-from-top"},
+							function(inputVal){
+								if (inputVal === false) return false;
+								if (inputVal === "") {
+									swal.showInputError("You need to input!");
+									return false
+								} else {
+									pay(inputVal);
+									swal("Nice!", "Transaksi berhasil", "success");
+								}
+							});
+						} else {
+							getDisc(inputValue);
+							swal({
+								title: "Bayar",
+								text: "Masukkan nominal yang dibayarkan:",
+								type: "input",
+								showCancelButton: true,
+								closeOnConfirm: false,
+								animation: "slide-from-top"},
+								function(inputVal){
+									if (inputVal === false) return false;
+									if (inputVal === "") {
+										swal.showInputError("You need to input!");
+										return false
+									} else {
+										pay(inputVal);
+										swal("Nice!", "Transaksi berhasil", "success");
+									}
+								});
+							}
+						});
+					});
 
 		$("#signupForm").validate({
 			errorElement: "em",
@@ -287,7 +344,7 @@
 		$('.mask-phone').mask('0000-0000');
 		$('.mask-currency').mask('Rp. 000.000.000');
 		$('.mask-phone_with_ddd').mask('(00) 0000-0000');
-		$('.mask-phone_us').mask('(000) 000-0000');
+		$('.mask-phone_us').mask('000-000-000-000');
 		$('.mask-time-h-m').mask('00:00');
 		$('.mask-mixed').mask('AAA 000-S0S');
 		$('.mask-cpf').mask('000.000.000-00', {reverse: true});

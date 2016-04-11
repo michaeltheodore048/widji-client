@@ -11,7 +11,6 @@
 	<title>Radical Cashier</title>
 
 	<!-- plugins -->
-	<script type="text/javascript" src="../API/api.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 	<!-- start: Css -->
@@ -82,7 +81,6 @@
 										<tbody>
 										</tbody>
 									</table>
-									<input type="button" class="btn btn-primary right" value="Print">
 								</div>
 							</div>
 						</div>
@@ -115,6 +113,7 @@
 
 
 	<!-- plugins -->
+	<script type="text/javascript" src="../API/api.js"></script>
 	<script src="asset/js/plugins/moment.min.js"></script>
 	<script src="asset/js/plugins/handsontable.full.min.js"></script>
 	<script src="asset/js/plugins/fullcalendar.min.js"></script>
@@ -148,58 +147,12 @@
 			window.location.assign("login.html");
 		}
 		checkCashier();
-	TableEditable.init();
+		TableEditable.init();
+		localStorage.setItem('customer_id',"");
 
 	$('#logoutBtn').click(function(){
 		logout();
 	});
-
-		// var countries = [
-		// 	{ value: 'Andorra', data: '123' },
-		// 	{ value: 'Zimbabwe', data: '234' }
-		// ];
-		//
-		// 	// setup autocomplete function pulling from currencies[] array
-		// 	$('#pelanggan').autocomplete({
-		// 		lookup: countries,
-		// 		onSelect: function (suggestion) {
-		// 			// $('.pelanggan').val(suggestion.value);
-		// 			$('.telepon').val(suggestion.data);
-		// 			// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-		// 		}
-		// 	});
-
-	// 	var customers = [
-  //   {
-  //     "id": 1,
-  //     "name": "jojon",
-  //     "phone": "0856",
-  //     "email": null,
-  //     "membership_id": null,
-  //     "birthdate": null
-  //   },
-  //   {
-  //     "id": 2,
-  //     "name": "Meke",
-  //     "phone": "123",
-  //     "email": null,
-  //     "membership_id": null,
-  //     "birthdate": null
-  //   }
-  // ];
-
-		// var customers = getCustomers();
-
-
-			// setup autocomplete function pulling from currencies[] array
-			$('#pelanggan').autocomplete({
-				lookup: customers,
-				onSelect: function (suggestion) {
-					// $('.pelanggan').val(suggestion.value);
-					$('.telepon').val(suggestion.phone);
-					// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				}
-			});
 
 		$("#signupForm").validate({
 			errorElement: "em",

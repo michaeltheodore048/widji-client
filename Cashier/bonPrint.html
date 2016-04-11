@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Miminium Admin Template v.1">
+	<meta name="author" content="Isna Nur Azis">
+	<meta name="keyword" content="">
+	<title>Radical Cashier</title>
+
+	<!-- plugins -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+	<!-- start: Css -->
+	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/select2.min.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/handsontable.full.min.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/simple-line-icons.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/animate.min.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/fullcalendar.min.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/mediaelementplayer.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/plugins/bootstrap-material-datetimepicker.css"/>
+	<link rel="stylesheet" type="text/css" href="asset/css/datepicker.css"/>
+	<link rel="stylesheet" type="text/css" media="all" href="asset/css/autocompletestyle.css">
+	<link rel="stylesheet" type="text/css" href="asset/css/style.css">
+  <link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+	<!-- end: Css -->
+
+	<link rel="shortcut icon" href="asset/img/logomi.png">
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body style="padding:10px;">
+	<center>
+		<p>WIDJI Digital Printing<br>
+		Jl. Mekar Utama no. 56, Bandung<br>
+		E. widji.mekarwangi@gmail.com || Tlp. 022-5234040</p>
+	</center><br>
+
+	No. Struk : <span id="nobon"></span><br>
+	Tanggal : <span id="tgl"></span> || Jam : <span id="jam"></span><br>
+	Customer : <span id="cust"></span><br>
+	Operator : <span id="operator"></span><br>
+	Diambil : <span id="tglambil"></span> <span id="jamambil"></span><br>
+	Kasir : <span id ="cashier"></span><br>
+
+	<hr>
+	<span id="header"></span>
+	<hr>
+
+	<table  id="tablePesanan" class="table" border="0" cellpadding="3">
+		<thead>
+			<tr>
+				<th >Item</th>
+				<th >Qty</th>
+				<th >Price</th>
+			</tr>
+		</thead>
+		<tbody id="orderTable">
+
+		</tbody>
+	</table>
+
+	<hr>
+	Keterangan:
+	<p id="info">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+	Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
+	<hr>
+	<center>
+		<span id="status"></span>
+		<br><br>
+
+		<p>Terima kasih atas kepercayaan Anda kepada kami.<br>
+		Barang yang tidak diambil lebih dari dua minggu diluar tanggung<br>
+		jawab kami, dan uang pembayaran tidak dapat dikembalikan.<br>
+		Saran dan masukan silahkan : hallo@widjionline.com</p>
+	</center>
+
+	<!-- start: Javascript -->
+	<script src="asset/js/jquery.min.js"></script>
+	<script src="asset/js/jquery.ui.min.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
+
+
+	<!-- plugins -->
+	<script src="asset/js/plugins/moment.min.js"></script>
+	<script src="asset/js/plugins/handsontable.full.min.js"></script>
+	<script src="asset/js/plugins/fullcalendar.min.js"></script>
+	<script src="asset/js/plugins/jquery.nicescroll.js"></script>
+	<script src="asset/js/plugins/jquery.vmap.min.js"></script>
+	<script src="asset/js/plugins/maps/jquery.vmap.world.js"></script>
+	<script src="asset/js/plugins/jquery.vmap.sampledata.js"></script>
+	<script src="asset/js/plugins/chart.min.js"></script>
+	<script src="asset/js/plugins/jquery.validate.min.js"></script>
+	<script src="asset/js/plugins/jquery.mask.min.js"></script>
+	<script src="asset/js/plugins/bootstrap-material-datetimepicker.js"></script>
+	<script src="asset/js/bootstrap.min.js"></script>
+	<script src="asset/js/plugins/select2.full.min.js"></script>
+	<script src="asset/js/bootstrap-datepicker.js"></script>
+	<script src="asset/js/jquery.autocomplete.min.js"></script>
+  <script src="dist/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../API/api.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script type="text/plain" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/moment/moment/master/locale/id.js"></script>
+	<script type="text/plain" src="https://raw.githubusercontent.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
+
+	<!-- custom javascript-->
+	<script src="asset/js/main.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		prepareBon(localStorage.getItem('objBon'));
+
+	});
+	</script>
+	<!-- custom -->
+	<script src="asset/js/main.js"></script>
+	<!-- end: Javascript -->
+</body>
+</html>

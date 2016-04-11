@@ -13,7 +13,6 @@
 	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
 
 	<!-- plugins -->
-	<script type="text/javascript" src="../API/api.js"></script>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/simple-line-icons.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/animate.min.css"/>
@@ -93,6 +92,10 @@
 				</li>
 				<li class="ripple">
 					<a href="index.html"><span class="fa-home fa"></span> Index
+					</a>
+				</li>
+				<li class="ripple">
+					<a href="customers.html"><span class="fa fa-users"></span> Customers
 					</a>
 				</li>
 				<li class="ripple">
@@ -187,36 +190,18 @@
 									</div>
 									<div class="form-group col-md-12">
 										<label class="col-sm-3 control-label text-right padding-top-7">Image</label>
-										<div class="col-sm-9"><input id="img" type="text" class="form-control"></div>
+										<div class="col-sm-9">
+											<input type="file" onchange="readURL(this);" id="upload" />
+										</div>
+										<div class="col-sm-3"></div>
+										<div class="col-sm-9">
+											<img id="img" src="" alt="" />
+										</div>
 									</div>
 									<div class="form-group col-md-12">
 										<label class="col-sm-3 control-label text-right padding-top-7">Price</label>
 										<div class="col-sm-9"><input id="price" type="text" class="form-control"></div>
 									</div>
-									<hr>
-									<center><h4>Bahan</h4></center>
-									<div class="form-group col-md-12">
-										<label class="col-sm-3 control-label text-right padding-top-7">Komposisi</label>
-										<div class="col-sm-5">
-											<select class="form-control">
-												<option>A4</option>
-												<option>Full Colour</option>
-												<option>Outdoor</option>
-												<option>Jilid Binding</option>
-												<option>Fotocopy</option>
-												<option>Lainnya</option>
-												<option>Item Tambahan</option>
-											</select>
-										</div>
-										<div class="col-sm-1 padding-top-7">
-											<p>X</p>
-										</div>
-										<div class="col-sm-1 no-pad"><input id="qty" type="text" class="form-control"></div>
-										<label class="col-sm-2 control-label text-right padding-top-7">lembar</label>
-									</div>
-									<button class="right btn btn-circle btn-outline btn-sm btn-default" value="primary">
-										<span class="fa fa-plus"></span>
-									</button>
 								</div>
 							</div>
 							<div class="panel-footer">
@@ -238,6 +223,7 @@
 
 
 <!-- plugins -->
+<script type="text/javascript" src="../API/api.js"></script>
 <script src="asset/js/plugins/moment.min.js"></script>
 <script src="asset/js/plugins/fullcalendar.min.js"></script>
 <script src="asset/js/plugins/jquery.nicescroll.js"></script>
@@ -248,9 +234,27 @@
 <script src="asset/js/main.js"></script>
 <script type="text/javascript">
 
+var encodedBase;
+
 $('#saveBtn').click(function(){
-	addNewProduct();
+	// alert(encodedBase);
+	addNewProduct(encodedBase);
 });
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			encodedBase = e.target.result;
+			$('#img').attr('src', e.target.result).width(200).height(100);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+
+
 $('#btnReset').click(function(){
 	$('#successResetAlert').show();
 });

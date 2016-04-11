@@ -256,9 +256,9 @@
 									</div>
 									<br><br>
 									<div class="form-group">
-										<label class="col-sm-2 control-label text-right padding-top-7">Tanggal</label>
+										<label class="col-sm-2 control-label text-right padding-7">Tanggal</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="tanggal-text-box" disabled>
+											<input type="text" id="tgl" class="form-control" disabled="">
 										</div>
 									</div><br>
 									<div class="form-group form-animate-text" style="margin-top:40px !important;">
@@ -367,7 +367,6 @@
 				</div>
 			</div>
 		</div>
-		<input type='button' id='hapustes' class='btn btn-danger' value='Delete'>
 	</div>
 	<!-- end: content -->
 
@@ -434,45 +433,34 @@
 			if (bon == "") {
 				createOrder();
 			}else{
-				refreshOrderDetails();
+				refreshOrderDetails(bon);
 			}
 		});
 
-		$("#telpPelanggan").autocomplete({
-			source: function( request, response ) {
-				$.ajax({
-					url: "http://localhost:3030/radAPIeon/getCustomers",
-					dataType: "json",
-			    data: {
-			      term: request.term
-			    },
-					success: function(data) {
-						response($.map(data, function(item) {
-							return {
-								label: item.phone,
-								value: item.name
-							};
-						}));
+		$.ajax({
+			url: domain + '/getCustomers',
+			dataType: 'text',
+			method: 'POST',
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			data: {
+				token:token
+			},
+			success: function(response){
+				obj = JSON.parse(response);
+				// setup autocomplete function pulling from currencies[] array
+				$('#telpPelanggan').autocomplete({
+					lookup: obj,
+					onSelect: function (suggestion) {
+						$('#namaPelanggan').val(suggestion.name);
 					}
 				});
 			},
-			minLength: 2,
-			select: function(event, ui) {
-				$('#telpPelanggan').val(ui.item.phone);
-				$('#namaPelanggan').val(ui.item.name);
+			error: function(xhr, status, error){
+				alert(error);
+			},
+			complete: function(){
 			}
 		});
-
-			// // setup autocomplete function pulling from currencies[] array
-			// $('#telpPelanggan').autocomplete({
-			// 	lookup: $.makeArray(customers),
-			// 	onSelect: function (suggestion) {
-			// 		// $('.pelanggan').val(suggestion.value);
-			// 		$('#namaPelanggan').val(suggestion.name);
-			// 		// alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-			// 	}
-			// });
-
 
 		$('#addCust').click(function(){
 			createCustomerNonMember();
@@ -545,10 +533,10 @@
 				function(inputValue){
 					if (inputValue === false) return false;
 					if (inputValue === "") {
-						swal.showInputError("You need to write something!");
+						swal.showInputError("Admin must approve!");
 						return false
 					}
-					swal("Nice!", "You wrote: " + inputValue, "success");
+					deleteBon(inputValue);
 				});
 		});
 		$('#logoutBtn').click(function(){
@@ -573,21 +561,6 @@
 		konter.addEventListener('ended',function(){
 			nomorKonter.play();
 		});
-
-		// $('#addRowButton').click(function() {
-		// 	var table = document.getElementById("tablePesanan");
-		// 	var row = table.insertRow(table.rows.length);
-		// 	var cell1 = row.insertCell(0);
-		// 	var cell2 = row.insertCell(1);
-		// 	var cell3 = row.insertCell(2);
-		// 	var cell4 = row.insertCell(3);
-		// 	var cell5 = row.insertCell(4);
-		// 	cell1.innerHTML = table.rows.length-1;
-		// 	cell2.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
-		// 	cell3.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
-		// 	cell4.innerHTML = '<select class="form-control"><option disabled selected></option><option>option one</option><option>option two</option><option>option three</option><option>option four</option></select>';
-		// 	cell5.innerHTML = '<input type="text" class="form-control">'
-		// });
 
 		$("#signupForm").validate({
 			errorElement: "em",
