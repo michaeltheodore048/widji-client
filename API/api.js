@@ -1057,7 +1057,60 @@ function registerMember(){
    },
    success: function(response){
      obj = JSON.parse(response);
-     alert(obj.message);
+     JsBarcode("#bcTarget", obj.membershipId, {
+       format: "auto",
+       width:2,
+       height:40,
+       displayValue: false
+     });
+     function download() {
+       var dt = canvas.toDataURL();
+       this.href = dt;
+     }
+
+     var canvas = document.getElementById('bcTarget');
+     document.getElementById('download').style.display = "block";
+     document.getElementById('download').addEventListener('click', download, false);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function registerMemberOnly(){
+ $.ajax({
+   url: domain + '/registerMemberOnly',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     sessionCode:localStorage.getItem('session'),
+     phone:$("#noTlp").val(),
+     name:$("#nama").val(),
+     email:$("#email").val(),
+     membershipId:$("#membership").val(),
+     birthdate:$("#birthdate").val()
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     JsBarcode("#bcTarget", obj.membershipId, {
+       format: "auto",
+       width:2,
+       height:40,
+       displayValue: false
+     });
+     function download() {
+       var dt = canvas.toDataURL();
+       this.href = dt;
+     }
+
+     var canvas = document.getElementById('bcTarget');
+     document.getElementById('download').style.display = "block";
+     document.getElementById('download').addEventListener('click', download, false);
    },
    error: function(xhr, status, error){
      alert(error);

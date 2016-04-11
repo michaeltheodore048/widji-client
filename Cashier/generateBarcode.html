@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 	<!-- start: Css -->
+	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="asset/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="asset/css/plugins/select2.min.css"/>
@@ -67,6 +68,8 @@
 									<h3><span class="fa fa-qrcode"></span> Generate New Barcode</h3>
 								</div>
 								<div class="panel-body">
+								<center><canvas id="bcTarget"/></center>
+								<a class="right" id="download" download="barcode.png" style="display:none">Download as image</a>
 									<div class="form-group col-md-12">
 										<label class="col-sm-3 control-label text-right padding-top-7">Nama</label>
 										<div class="col-sm-9"><input id="nama" type="text" class="form-control"></div>
@@ -81,14 +84,13 @@
 									</div>
 									<div class="form-group col-md-12">
 										<label class="col-sm-3 control-label text-right padding-top-7">Birthdate</label>
-										<div class="col-sm-9"><input id="birthdate" type="text" class="form-control mask-date"></div>
+										<div class="col-sm-9"><input id="birthdate" type="text" class="form-control mask-date" placeholder="yyyy-mm-dd"></div>
 									</div>
 									<div class="form-group col-md-12">
 										<label class="col-sm-3 control-label text-right padding-top-7">No Telepon</label>
 										<div class="col-sm-9"><input id="noTlp" type="text" class="form-control mask-phone_us"></div>
 									</div>
 										<input type="button"class="btn btn-primary right" id="save" value="Save">
-									<div id="bcTarget"></div>
 								</div>
 							</div>
 						</div>
@@ -120,7 +122,8 @@
 	<script src="asset/js/bootstrap.min.js"></script>
 	<script src="asset/js/plugins/select2.full.min.js"></script>
 	<script src="asset/js/bootstrap-datepicker.js"></script>
-	<script src="asset/js/jquery-barcode.js"></script>
+	<script src="asset/js/JsBarcode.all.min.js"></script>
+	<script src="dist/sweetalert-dev.js"></script>
 	<script type="text/javascript" src="../API/api.js"></script>
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -133,8 +136,6 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-
-		$("#bcTarget").barcode("1234567890128", "ean13");
 
 		$('#save').click(function(){
 			registerMember();
@@ -201,7 +202,7 @@
 			}
 		});
 
-		$('.mask-date').mask('00/00/0000');
+		$('.mask-date').mask('0000-00-00');
 		$('.mask-time').mask('00:00');
 		$('.mask-date_time').mask('00/00/0000 00:00:00');
 		$('.mask-cep').mask('00000-000');
