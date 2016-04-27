@@ -1323,3 +1323,64 @@ function deleteBon(input){
 function newWindowMonitor(){
   window.open('monitorPrint.html', 'newwindow', 'width=450, height=650');
 }
+
+function cekcek(){
+ $.ajax({
+   url: domain + '/getAllOrders',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     sessionCode:localStorage.getItem('session')
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     drawMonitoringTable(obj.content);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function monitoringRow(rowData,input) {
+    var row = $("<tr />")
+    var dropdown = $("<select class='form-control' id='cat'><option value='1'>Antri</option><option value='2'>Sedang dikerjakan</option><option value='3'>Selesai</option></select>")
+    $("#monitoringTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+    row.append($("<td>" + rowData.no_bon + "</td>"));
+    row.append($("<td>" + rowData.status + "</td>"));
+    row.append($("<td>" + rowData.name + "</td>"));
+    row.append(dropdown);
+    // this.cells[3].prop('selectedIndex',2);
+    // $('#cat').prop('selectedIndex',3);
+    for (var i = 0; i < 14; i++) {
+      if (i+1 == input) {
+        row.append($("<td>x</td>"))
+      }else{
+        row.append($("<td></td>"))
+      }
+    }
+    row.append($("<td>" + rowData.created_at + "</td>"));
+    row.append($("<td><a href='#'><span class='fa fa-2x fa-print'></span></a></td>"));
+    $(row[0].cells[2].nextSibling).prop('selectedIndex',2);
+    colorMonitoringTable(row[0], 1);
+}
+
+function drawMonitoringTable(data) {
+    for (var i = 0; i < data.length; i++) {
+        monitoringRow(data[i],7);
+    }
+}
+
+function colorMonitoringTable(row, color){
+  if (color == 1) {
+    row.className = "yellow";
+  }else if (color == 2) {
+    row.className = "green";
+  }else{
+    row.className = "red";
+  }
+}

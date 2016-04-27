@@ -4,6 +4,18 @@
 
 /*Radion custom css*/
 
+.red{
+  background-color: red;
+}
+
+.yellow{
+  background-color: yellow;
+}
+
+.green{
+  background-color: green;
+}
+
 hr{
   color:black !important;
   size:3px !important;
