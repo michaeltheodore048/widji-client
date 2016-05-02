@@ -106,7 +106,8 @@
 			</div>
 		</div>
 	</div>
-	<select class='form-control' id='cat'><option value='1'>Black & White</option><option value='2'>Full Colour</option><option value='3'>Outdoor</option><option value='4'>Jilid Binding</option><option value='5'>Fotocopy</option><option value='6'>Lainnya</option><option value='7'>Item Tambahan</option></select>
+	<!-- <a href='#' id='print'><span class='fa fa-2x fa-print'></span></a> -->
+	<!-- <select class='form-control' id='cat'><option value='1'>Black & White</option><option value='2'>Full Colour</option><option value='3'>Outdoor</option><option value='4'>Jilid Binding</option><option value='5'>Fotocopy</option><option value='6'>Lainnya</option><option value='7'>Item Tambahan</option></select> -->
 	<!-- end: content -->
 
 	<!-- start: Javascript -->
@@ -143,12 +144,74 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		cekcek();
+		prepareMonitor();
+
+		setTimeout(tes, 1000);
+
+		function tes(){
+			$('#monitoringTable').find('a').click( function(){
+				newWindowMonitor($(this).parents('tr')[0].cells[0].innerHTML);
+			});
+
+			$('#monitoringTable').find('select').change(function(){
+				var nobonid = $(this).parents('tr')[0].cells[0].innerHTML;
+				if ($('#'+nobonid).val() == 0) {
+					$($(this).parents('tr')[0].cells[2].nextSibling).addClass('red');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('yellow');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('green');
+				}else if ($('#'+nobonid).val() == 1) {
+					$($(this).parents('tr')[0].cells[2].nextSibling).addClass('yellow');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('green');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('red');
+					swal({
+						title: "Input operator name!",
+						text: "Operator name:",
+						type: "input",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						animation: "slide-from-top"
+					},
+					function(inputValue){
+						if (inputValue === false) return false;
+						if (inputValue === "") {
+							swal.showInputError("You need to write something!");
+							return false
+						}else{
+							changeStatusToOnProgress(nobonid, inputValue);
+							minItemsBon(nobonid)
+							swal("Nice!", "Sukses!" ,"success");
+						}
+					});
+				}else if($('#'+nobonid).val() == 2){
+					$($(this).parents('tr')[0].cells[2].nextSibling).addClass('green');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('yellow');
+					$($(this).parents('tr')[0].cells[2].nextSibling).removeClass('red');
+					// colorMonitoringTable($(this).parent('tr')[0], 2);
+					swal({
+						title: "Input rack number!",
+						text: "Rack number:",
+						type: "input",
+						showCancelButton: true,
+						closeOnConfirm: false,
+						animation: "slide-from-top"
+					},
+					function(inputValue){
+						if (inputValue === false) return false;
+						if (inputValue === "") {
+							swal.showInputError("You need to write something!");
+							return false
+						}else{
+							changeStatusToDone(nobonid, inputValue)
+							swal("Nice!", "Sukses", "success");
+						}
+					});
+				}
+
+			});
+
+		}
 
 
-		$('#cat').change(function(){
-		  alert("cuy");
-		});
 
 		$('#logoutBtn').click(function(){
 			logout();

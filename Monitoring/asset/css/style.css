@@ -5,15 +5,15 @@
 /*Radion custom css*/
 
 .red{
-  background-color: red;
-}
-
-.yellow{
-  background-color: yellow;
+  background-color: antiquewhite;
 }
 
 .green{
-  background-color: green;
+  background-color: chartreuse;
+}
+
+.yellow{
+  background-color: gold  ;
 }
 
 hr{

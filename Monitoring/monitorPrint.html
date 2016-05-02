@@ -46,27 +46,15 @@
 	Nama Customer : <span id="cust"></span><br>
 	Deadline : <span id="tglambil"></span> <span id="jamambil"></span><br>
 
-	<center>______________________________________________________________</center>
-	<center>Print/Copy</center>
-	<center>______________________________________________________________</center>
-	2x Print BW HVS A0 <br>
-	1x Print FC muka Art Paper 210 gram <br>
-	3x Print Outdoor Flexi China
-	<br><br>
-
-	<center>Finishing</center>
-	<center>______________________________________________________________</center>
-	2x BD Ring Kawat <br>
-	1x BD Hard Cover
-	<br><br>
-
-	<center>Lainnya</center>
-	<center>______________________________________________________________</center>
-	1x Mika A4
+	<p id="content">
+	</p>
 	<br><br>
 
 	<center>Keterangan</center>
 	<center>______________________________________________________________</center>
+	<p id="keterangan">
+
+	</p>
 	<br><br>
 
 	<center>Checker:<span></span></center>
@@ -108,6 +96,25 @@
 	<script src="asset/js/main.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+
+	 var info = JSON.parse(localStorage.getItem('objSpk'));
+	 console.log(info);
+	 $('#nobon').text(info.no_bon);
+	 $('#cust').text(info.order_name);
+	 $('#tglambil').text(info.tanggalPengambilan.substring(0,10));
+	 $('#keterangan').text(info.keterangan);
+
+	 var temp;
+	 for (var i = 0; i < info.content.length; i++) {
+		 console.log(info.content[i].name);
+		 if (temp != info.content[i].name) {
+			 $("#content").append("<center>______________________________________________________________</center>");
+  		 $('#content').append("<center><b>" + info.content[i].name+"</b></center>");
+  		 $("#content").append("<center>______________________________________________________________</center>");
+		 }
+		 $('#content').append(info.content[i].quantity+"x "+info.content[0].media+"-"+info.content[i].size+"<br>");
+		 temp = info.content[i].name;
+	 }
 
 	});
 	</script>

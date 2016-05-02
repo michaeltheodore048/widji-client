@@ -787,8 +787,6 @@ function refreshOrderDetails(bon){
       obj = JSON.parse(response);
       drawOrderTable(obj);
       console.log(obj);
-
-
       if (obj.tanggalPengambilan != undefined) {
         $("#date").val(obj.tanggalPengambilan.substring(0,10));
       }
@@ -988,7 +986,6 @@ function pay(input){
    },
    success: function(response){
      obj = JSON.parse(response);
-     console.log(obj);
      if (obj.status === "DP") {
        $("#dp").text(input);
        $("#sisa").text(Number($("#total").text() - input));
@@ -1303,7 +1300,6 @@ function deleteBon(input){
    },
    success: function(response){
      obj = JSON.parse(response);
-     console.log(obj);
      if (obj.message == "err.. no rows on usr while p_a c") {
        swal.showInputError("Wrong password!");
        return false
@@ -1320,19 +1316,38 @@ function deleteBon(input){
  });
 }
 
-function newWindowMonitor(){
-  window.open('monitorPrint.html', 'newwindow', 'width=450, height=650');
+function newWindowMonitor(nobon){
+  $.ajax({
+    url: 'http://localhost:3030/radAPIeon/getOrderItem',
+    dataType: 'text',
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+      token:token,
+      no_bon:nobon
+    },
+    success: function(response){
+      obj = JSON.parse(response);
+      console.log(obj);
+      localStorage.setItem('objSpk',response);
+    },
+    error: function(xhr, status, error){
+      alert(error);
+    },
+    complete: function(){
+    }
+  });
+    window.open('monitorPrint.html', 'newwindow', 'width=450, height=650');
 }
 
-function cekcek(){
+function prepareMonitor(){
  $.ajax({
-   url: domain + '/getAllOrders',
+   url: domain + '/deadlineMonitor',
    dataType: 'text',
    method: 'POST',
    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
    data: {
-     token:token,
-     sessionCode:localStorage.getItem('session')
+     token:token
    },
    success: function(response){
      obj = JSON.parse(response);
@@ -1346,41 +1361,183 @@ function cekcek(){
  });
 }
 
-function monitoringRow(rowData,input) {
+function monitoringRow(rowData) {
+  if (rowData.selisih > 0 && rowData.selisih <= 14 && rowData.selisih != null) {
     var row = $("<tr />")
-    var dropdown = $("<select class='form-control' id='cat'><option value='1'>Antri</option><option value='2'>Sedang dikerjakan</option><option value='3'>Selesai</option></select>")
+    var dropdown = $("<select class='form-control' id='" + rowData.no_bon + "' ><option value='0' id='antri'>Antri</option><option value='1' id='kerja'>Sedang dikerjakan</option><option value='2' id='selesai'>Selesai</option></select>");
     $("#monitoringTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
     row.append($("<td>" + rowData.no_bon + "</td>"));
-    row.append($("<td>" + rowData.status + "</td>"));
-    row.append($("<td>" + rowData.name + "</td>"));
+    setTimeout(getOrderItem(rowData.no_bon), 1);
+    row.append($("<td> " + localStorage.getItem('rincianjob') + " </td>"));
+    row.append($("<td>" + rowData.keterangan + "</td>"));
     row.append(dropdown);
-    // this.cells[3].prop('selectedIndex',2);
-    // $('#cat').prop('selectedIndex',3);
+
     for (var i = 0; i < 14; i++) {
-      if (i+1 == input) {
+      if (i+1 == rowData.selisih) {
         row.append($("<td>x</td>"))
       }else{
         row.append($("<td></td>"))
       }
     }
-    row.append($("<td>" + rowData.created_at + "</td>"));
-    row.append($("<td><a href='#'><span class='fa fa-2x fa-print'></span></a></td>"));
-    $(row[0].cells[2].nextSibling).prop('selectedIndex',2);
-    colorMonitoringTable(row[0], 1);
+
+    row.append($("<td>" + rowData.tanggal_pengambilan.substring(0,10) + "</td>"));
+    row.append($("<td><a href='#' onclick='return false;'><span class='fa fa-2x fa-print'></span></a></td>"));
+    $(row[0].cells[2].nextSibling).prop('selectedIndex',rowData.status_pengerjaan);
+    if (rowData.status_pengerjaan == 0 ) {
+      row[0].cells[2].nextSibling.className = 'red';
+    }else if (rowData.status_pengerjaan == 1 ) {
+      row[0].cells[2].nextSibling.className = 'yellow';
+    }else if (rowData.status_pengerjaan == 2) {
+      row[0].cells[2].nextSibling.className = 'green';
+    }
+  }
 }
 
 function drawMonitoringTable(data) {
     for (var i = 0; i < data.length; i++) {
-        monitoringRow(data[i],7);
+        monitoringRow(data[i]);
     }
 }
 
-function colorMonitoringTable(row, color){
-  if (color == 1) {
-    row.className = "yellow";
-  }else if (color == 2) {
-    row.className = "green";
-  }else{
-    row.className = "red";
+function colorMonitoringTable(nobon, color){
+  var cell = document.getElementById('nobon');
+  if (color == 0) {
+    cell.style.background = "#FFFFCC";
+  }else if (color == 1) {
+    cell.style.background = "#CCFFFF";
+  }else if (color == 2){
+    cell.style.background = "#CCFFCC";
   }
+}
+
+function updateColor(value,nobon){
+  var cell = $('#'+nobon);
+  if (value == 0) {
+    cell.style.background = "#FFFFCC";
+  }else if (value == 1) {
+    cell.style.background = "#CCFFFF";
+  }else if (value == 2){
+    cell.style.background = "#CCFFCC";
+  }
+}
+
+function changeStatusToOnProgress(nobon, worker){
+ $.ajax({
+   url: domain + '/changeStatusToOnProgress',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:nobon,
+     worker:worker
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function changeStatusToDone(nobon, rak){
+ $.ajax({
+   url: domain + '/changeStatusToDone',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:nobon,
+     laci:rak
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function getOrderItem(nobon){
+ $.ajax({
+   async: false,
+   url: domain + '/getOrderItem',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:nobon
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     var res ="";
+     for (var i = 0; i < obj.content.length; i++) {
+       res += obj.content[i].quantity + "x " + obj.content[i].media + "-" + obj.content[i].size + "  ";
+     }
+    localStorage.setItem('rincianjob',res);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function minItemsBon(nobon){
+ $.ajax({
+   async: false,
+   url: domain + '/getOrderItem',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:nobon
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     for (var i = 0; i < obj.content.length; i++) {
+       console.log("min items:" + nobon + " " + obj.content[i].id_order_item);
+       minItem(nobon, obj.content[i].id_order_item);
+     }
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
+}
+
+function minItem(nobon,idOrderItem){
+ $.ajax({
+   async: false,
+   url: domain + '/associateOrderItemAndStocks',
+   dataType: 'text',
+   method: 'POST',
+   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+   data: {
+     token:token,
+     no_bon:nobon,
+     idOrderItem:idOrderItem
+   },
+   success: function(response){
+     obj = JSON.parse(response);
+     console.log(obj);
+   },
+   error: function(xhr, status, error){
+     alert(error);
+   },
+   complete: function(){
+   }
+ });
 }
