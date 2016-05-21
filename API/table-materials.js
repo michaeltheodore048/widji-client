@@ -136,9 +136,9 @@ var TableEditable = function () {
 
         var tableWrapper = $("#sample_editable_1_wrapper");
 
-        tableWrapper.find(".dataTables_length select").select2({
-            showSearchInput: false //hide search box with special css class
-        }); // initialize select2 dropdown
+        // tableWrapper.find(".dataTables_length select").select2({
+        //     showSearchInput: false //hide search box with special css class
+        // }); // initialize select2 dropdown
 
         var nEditing = null;
         var nNew = false;
@@ -294,8 +294,6 @@ var TableEditable = function () {
             /* Get the row as a parent of the link that was clicked on */
             var nRow = $(this).parents('tr')[0];
             var jqTds = $('input', nRow);
-
-            alert("hehe");
 
             // if (nEditing !== null && nEditing != nRow) {
             //     /* Currently editing - but not this row - restore the old before continuing to edit mode */

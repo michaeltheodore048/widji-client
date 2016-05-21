@@ -126,6 +126,10 @@
   <script type="text/javascript">
   $(document).ready(function(){
     setAndGetText("get");
+    
+    setInterval(function(){
+      setAndGetText("get");
+    },60000);
 
     setInterval(function(){
       display();
@@ -138,7 +142,7 @@
     function doSlideshow(){
       if(nextimage>=images.length){nextimage=0;}
       $('.slideshow').css('background-image','url("'+images[nextimage++]+'")').fadeIn(500,function(){
-        setTimeout(doSlideshow,1000);
+        setTimeout(doSlideshow,4000);
       });
     }
 

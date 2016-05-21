@@ -156,6 +156,7 @@ function display(){
     },
     success: function(response){
       obj = JSON.parse(response);
+      // console.log(obj);
       obj.category_1 != undefined && $('#antrian1').text(obj.category_1 + " " + obj.nomor_antrian_1);
       obj.counter_1 != undefined && $('#counter1').text(obj.counter_1);
       obj.category_2 != undefined && $('#antrian2').text(obj.category_2 + " " + obj.nomor_antrian_2);
@@ -172,30 +173,47 @@ function display(){
 }
 
 function setAndGetText(input){
-  $.ajax({
-    url: domain + '/setAndGetText',
-    dataType: 'text',
-    method: 'POST',
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: {
-      token:token,
-      text: input,
-      session: localStorage.getItem('session')
-    },
-    success: function(response){
-      obj = JSON.parse(response);
-      if (input != "get") {
-        swal("Success", "Running Text Has Been Changed", "success");
+  if (input == "get") {
+    $.ajax({
+      url: domain + '/setAndGetText',
+      dataType: 'text',
+      method: 'POST',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {
+        token:token
+      },
+      success: function(response){
+        obj = JSON.parse(response);
+        $('#runningTextBox').val(obj.text);
+        $('#running-text').text(obj.text);
+      },
+      error: function(xhr, status, error){
+      },
+      complete: function(){
       }
-      $('#runningTextBox').val(obj.text);
-      $('#running-text').text(obj.text);
-    },
-    error: function(xhr, status, error){
-      alert(error);
-    },
-    complete: function(){
-    }
-  });
+    });
+  }else{
+    $.ajax({
+      url: domain + '/setAndGetText',
+      dataType: 'text',
+      method: 'POST',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {
+        token:token,
+        text: input,
+        session: localStorage.getItem('session')
+      },
+      success: function(response){
+        obj = JSON.parse(response);
+        swal("Success", "Running Text Has Been Changed", "success");
+      },
+      error: function(xhr, status, error){
+        alert(error);
+      },
+      complete: function(){
+      }
+    });
+  }
 }
 
 function prepareOrderTable(input){
@@ -374,7 +392,8 @@ function loginAdmin(){
         localStorage.setItem('username', $('input[name=username]').val());
         window.location.assign("index.html");
       }else{
-        alert(obj.message);
+        // alert(obj.message);
+        alert("cek");
       }
     },
     error: function(xhr, status, error){
